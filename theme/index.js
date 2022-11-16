@@ -482,7 +482,7 @@ export const theme = createTheme({
     action: {
       active: '#6B7280',
       focus: 'rgba(55, 65, 81, 0.12)',
-      hover: '#d2ab66',
+      hover: '#ff7f5680',
       selected: 'rgba(55, 65, 81, 0.08)',
       disabledBackground: 'rgba(55, 65, 81, 0.12)',
       disabled: 'rgba(55, 65, 81, 0.26)',
@@ -634,3 +634,16 @@ export const theme = createTheme({
   //   },
   // },
 });
+
+
+export const themeHai = createTheme({
+  colors: {
+    primary: {
+      color: 'blue',
+    },
+    secondary: {
+      color: 'green',
+    },
+  },
+});
+

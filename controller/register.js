@@ -44,7 +44,7 @@ export const useController = () => {
         "Please wait for the Admin's Apporval",
         "success"
       );
-      router.push("/dashboard/home");
+      router.push("/user-dashboard/home");
     },
     onError: (err) =>
       // console.log("error ----<>",err.response.data.details[0].message)
