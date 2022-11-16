@@ -12,7 +12,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import bg from "../public/bg.jpg";
+import bg from "../public/bg.png";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -24,7 +24,7 @@ import { getUsers } from "../api/user";
 import { useController } from "../controller/register";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "./loading";
-
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 //===================================================
 export default function Register() {
   const [double, setDouble] = React.useState(false);
@@ -53,33 +53,18 @@ export default function Register() {
       {/* ====================================== */}
       <Box
         sx={{
-          //   backgroundImage: `url(${bg.src})`,
-          background: "linear-gradient(45deg, #ff7f56, #ffffffc9)",
-          p: 10,
-          //  height: "10%",
+          backgroundImage: `url(${bg.src})`,
+          backgroundPosition: "bottom",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          p: "20%",
           display: "flex",
-          //  justifyContent: "center",
-          //  alignItems: "center",
           flexDirection: "column",
-          //  opacity: 0.5,
-
+          // opacity: 0.5,
           minWidth: "100%",
         }}
       >
-        {" "}
-        {/* <Button variant="outlined">Sign in</Button> */}
-        <Typography
-          variant="h4"
-          sx={{
-            color: "white",
-            width: "50%",
-            // height: "100vh",
-
-            fontFamily: "poppins",
-          }}
-        >
-          Welcome to he OFS Hostel fellow Hosteler
-        </Typography>
+        <Box></Box>
       </Box>
       {/* ============== FORM ======================== */}
       <form onSubmit={addForm.handleSubmit}>
@@ -95,8 +80,8 @@ export default function Register() {
             p: 5,
             flexDirection: "column",
             //  minWidth: "100%",
-            borderTopLeftRadius: 50,
-            borderTopRightRadius: 50,
+            // borderTopLeftRadius: 50,
+            // borderTopRightRadius: 50,
           }}
         >
           {" "}
@@ -156,7 +141,7 @@ export default function Register() {
               </Box>
             </Grid> */}
 
-            <Grid sx={{ display: "flex", p: 3 }} item md={6} xs={6}>
+            <Grid sx={{ display: "flex", p: 3 }} item md={6} xs={12}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <label
                   style={{ display: "flex", flexDirection: "column" }}
@@ -176,10 +161,12 @@ export default function Register() {
                 </label>
                 <TextField
                   id="file-input"
+                  required
                   error={addForm.touched.photo && Boolean(addForm.errors.photo)}
                   helperText={addForm.touched.photo && addForm.errors.photo}
                   name="photo"
                   type="file"
+                  sx={{ width: "90%" }}
                   onChange={(e) => {
                     addForm.setFieldValue("photo", e.target.files[0]);
                     if (e.target.files && e.target.files[0]) {
@@ -190,7 +177,14 @@ export default function Register() {
               </Box>
             </Grid>
             <Grid sx={{ display: "flex", p: 3 }} item md={6} xs={6}>
-              {image ? <img src={image} width={250} height={150} /> : null}
+              {image ? (
+                <img
+                  src={image}
+                  width={350}
+                  height={180}
+                  style={{ border: "1px dashed gray" }}
+                />
+              ) : null}
             </Grid>
           </Grid>
           <Grid container sx={{ width: "100%", mt: 5, display: "flex", p: 0 }}>
@@ -217,11 +211,13 @@ export default function Register() {
                 }}
                 size="small"
                 variant="standard"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <PersonIcon />
-                  </InputAdornment>
-                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid
@@ -242,11 +238,13 @@ export default function Register() {
                 sx={{ width: "90%" }}
                 size="small"
                 variant="standard"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid
@@ -269,11 +267,13 @@ export default function Register() {
                 sx={{ width: "90%" }}
                 size="small"
                 variant="standard"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <LocalPhoneIcon />
-                  </InputAdornment>
-                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocalPhoneIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid
@@ -296,11 +296,13 @@ export default function Register() {
                 sx={{ width: "90%" }}
                 size="small"
                 variant="standard"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <LocalPhoneIcon />
-                  </InputAdornment>
-                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CalendarMonthIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid
@@ -308,52 +310,40 @@ export default function Register() {
               item
               md={6}
               xs={12}
-              sx={{ display: "flex", flexDirection: "column", mt: 5 }}
+              sx={{ display: "flex", flexDirection: "column", mt: 6 }}
             >
-              <FormLabel sx={{ mb: 2 }}>Room Preference</FormLabel>
+              <FormLabel sx={{ mb: -2 }}>Room Preference</FormLabel>
 
               {/* <InputAdornment position='start'><AccountCircleIcon/></InputAdornment> */}
 
-              <FormControl fullWidth>
-                <Select
-                  error={
-                    addForm.touched.roomPreference &&
-                    Boolean(addForm.errors.roomPreference)
-                  }
-                  helperText={
-                    addForm.touched.roomPreference &&
-                    addForm.errors.roomPreference
-                  }
-                  id="roomPreference"
-                  name="roomPreference"
-                  value={addForm.values.roomPreference}
-                  onChange={addForm.handleChange}
-                  // onChange={(e) =>
-                  //   {
-                  //     if (e.target.value === "double") {
-                  //       setDouble(true);
-                  //       setTripple(false);
-                  //     }
-                  //     if (e.target.value === "tripple") {
-                  //       setDouble(false);
-                  //       setTripple(true);
-                  //     }
-                  //   }
-                  // }
-                  variant="standard"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <HotelIcon />
-                    </InputAdornment>
-                  }
-                  //  value={age}
-                  //  label="Age"
-                  //  onChange={handleChange}
-                  sx={{ width: "90%" }}
-                >
-                  <MenuItem value="double">Double</MenuItem>
-                  <MenuItem value="tripple">Tripple</MenuItem>
-                </Select>
+              <FormControl >
+                  <Select
+                    
+                    id="roomPreference"
+                    name="roomPreference"
+                    value={addForm.values.roomPreference}
+                    onChange={(e) => {
+                      if (e.target.value === "double") {
+                        setDouble(true);
+                        setTripple(false);
+                      }
+                      if (e.target.value === "tripple") {
+                        setDouble(false);
+                        setTripple(true);
+                      }
+                      addForm.setFieldValue("roomPreference", e.target.value);
+                    }}
+                    variant="standard"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <HotelIcon />
+                      </InputAdornment>
+                    }
+                    sx={{ width: "90%", mt: 4 }}
+                  >
+                    <MenuItem value="double">Double</MenuItem>
+                    <MenuItem value="tripple">Tripple</MenuItem>
+                  </Select>
               </FormControl>
               {/* ============= Conditional Rendering ====================== */}
               {double ? (
@@ -380,10 +370,10 @@ export default function Register() {
             loading={add.isLoading}
             type="submit"
             sx={{
-              backgroundColor: "#ff7f56",
+              backgroundColor: "#f76334",
               color: "white",
               width: "50%",
-              // m: 2,
+              fontSize: 16,
               m: "auto",
               mt: 5,
               borderRadius: "100px",

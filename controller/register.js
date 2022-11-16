@@ -3,8 +3,11 @@ import { register } from "../api/auth/register";
 import { getUsers } from "../api/user";
 import { registrationValidation } from "../validation/register";
 import { useFormik } from "formik";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+//=========================================
 export const useController = () => {
+  const router = useRouter();
   //------------------ QUERY -------------------------------------
   const query = useQuery({
     queryKey: ["user"],
@@ -16,15 +19,15 @@ export const useController = () => {
     initialValues: {
       name: "",
       email: "",
-      phone: 0,
-      dob:"",
-      idPhoto:"",
-      photo:"",
+      phone: "",
+      dob: "",
+      idPhoto: "",
+      photo: "",
       roomPreference: "",
     },
     validationSchema: registrationValidation,
     onSubmit: (values) => {
-      console.log("client payload --",values) 
+      console.log("client payload --", values);
       add.mutate(values);
     },
   });
@@ -36,9 +39,19 @@ export const useController = () => {
       query.refetch();
       //   setShowAdd(false);
       //   addForm.resetForm();
-      Swal.fire("User Registered !", "Please wait for the Admin's Apporval", "success");
+      Swal.fire(
+        "User Registered !",
+        "Please wait for the Admin's Apporval",
+        "success"
+      );
+      router.push("/dashboard/home");
     },
-    onError: (err) => swal("Error !", err.message, "error"),
+    onError: (err) =>
+      // console.log("error ----<>",err.response.data.details[0].message)
+      // Swal.fire("Error !", err.response.data, "error") ||
+      // Swal.fire("Error !", err.response.data.errors.phone.message, "error"),
+      Swal.fire("Error !", err.response.data.errors? (err.response.data.errors.phone.message) : (err.response.data), "error"),
+
   });
 
   return { query, add, addForm };
