@@ -5,6 +5,9 @@ import { CacheProvider } from "@emotion/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
 import { CssBaseline } from "@mui/material";
+import DarkModeProvider from "../context/darkMode";
+import SidebarOpenProvider from "../context/sidebarOpen";
+// import { createEmotionCache } from "../utils/create-emotion-cache";
 
 // import LocalizationProvider from "@mui/lab/LocalizationProvider";
 // import { createEmotionCache } from "../utils/create-emotion-cache";
@@ -12,38 +15,44 @@ import { CssBaseline } from "@mui/material";
 // const clientSideEmotionCache = createEmotionCache();
 const queryClient = new QueryClient();
 //=========================================
-function MyApp({ Component, pageProps }) {
+const App = (props) => {
   // const getLayout = Component.getLayout ?? ((page) => page);
+  const { Component, pageProps } = props;
+
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <>
       {/* <Head>
-        <title>CRM</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
+          <title>CRM</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
       <Component {...pageProps} /> */}
 
       <QueryClientProvider client={queryClient}>
         {/* <CacheProvider> */}
-          <Head>
-            <title>CRM</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1, width=device-width"
-            />
-          </Head>
-          {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {/* <DashboardFilterProvider> */}
-              <Component {...pageProps} />
-              {/* </DashboardFilterProvider> */}
-            </ThemeProvider>
-          {/* </LocalizationProvider> */}
+        <Head>
+          <title>CRM</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
+        <ThemeProvider theme={theme}>
+          {/* <CssBaseline /> */}
+          {/* <DashboardFilterProvider> */}
+          {/* <Component {...pageProps} /> */}
+          <DarkModeProvider>
+            <SidebarOpenProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </SidebarOpenProvider>
+          </DarkModeProvider>
+
+          {/* </DashboardFilterProvider> */}
+        </ThemeProvider>
+        {/* </LocalizationProvider> */}
         {/* </CacheProvider> */}
       </QueryClientProvider>
     </>
   );
-}
+};
 
-export default MyApp;
+export default App;

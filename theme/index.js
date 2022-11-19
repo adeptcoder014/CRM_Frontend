@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
   breakpoints: {
@@ -17,25 +17,25 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
         },
         sizeSmall: {
-          padding: '6px 16px',
+          padding: "6px 16px",
         },
         sizeMedium: {
-          padding: '8px 20px',
+          padding: "8px 20px",
         },
         sizeLarge: {
-          padding: '11px 24px',
+          padding: "11px 24px",
         },
         textSizeSmall: {
-          padding: '7px 12px',
+          padding: "7px 12px",
         },
         textSizeMedium: {
-          padding: '9px 16px',
+          padding: "9px 16px",
         },
         textSizeLarge: {
-          padding: '12px 16px',
+          padding: "12px 16px",
         },
       },
     },
@@ -47,9 +47,9 @@ export const theme = createTheme({
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: '32px 24px',
-          '&:last-child': {
-            paddingBottom: '32px',
+          padding: "32px 24px",
+          "&:last-child": {
+            paddingBottom: "32px",
           },
         },
       },
@@ -57,90 +57,89 @@ export const theme = createTheme({
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
-          variant: 'h6',
+          variant: "h6",
         },
         subheaderTypographyProps: {
-          variant: 'body2',
+          variant: "body2",
         },
       },
       styleOverrides: {
         root: {
-          padding: '32px 24px',
+          padding: "32px 24px",
         },
       },
     },
     MuiCssBaseline: {
       styleOverrides: {
-        '*': {
-          boxSizing: 'border-box',
+        "*": {
+          boxSizing: "border-box",
           margin: 0,
           padding: 0,
         },
         html: {
-          MozOsxFontSmoothing: 'grayscale',
-          WebkitFontSmoothing: 'antialiased',
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100%',
-          width: '100%',
+          MozOsxFontSmoothing: "grayscale",
+          WebkitFontSmoothing: "antialiased",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100%",
+          width: "100%",
         },
         body: {
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-          minHeight: '100%',
-          width: '100%',
+          display: "flex",
+          flex: "1 1 auto",
+          flexDirection: "column",
+          minHeight: "100%",
+          width: "100%",
         },
-        '#__next': {
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-          height: '100%',
-          width: '100%',
+        "#__next": {
+          display: "flex",
+          flex: "1 1 auto",
+          flexDirection: "column",
+          height: "100%",
+          width: "100%",
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
         outlined: {
-          color: "#9A6715"
+          color: "#9A6715",
         },
         focused: {
-          backgroundColor: 'red'
-        }
-      }
+          backgroundColor: "red",
+        },
+      },
     },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: '#9A6715',
+          borderColor: "#9A6715",
           borderWidth: 1,
           // backgroundColor:"gray"
           focused: {
             borderColor: "red",
-            backgroundColor: "red"
-  
-          }
+            backgroundColor: "red",
+          },
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: '#F3F4F6',
-          '.MuiTableCell-root': {
-            color: '#374151',
+          backgroundColor: "#F3F4F6",
+          ".MuiTableCell-root": {
+            color: "#374151",
           },
-          borderBottom: 'none',
-          '& .MuiTableCell-root': {
-            borderBottom: 'none',
-            fontSize: '12px',
+          borderBottom: "none",
+          "& .MuiTableCell-root": {
+            borderBottom: "none",
+            fontSize: "12px",
             fontWeight: 600,
             lineHeight: 1,
             letterSpacing: 0.5,
-            textTransform: 'uppercase',
+            textTransform: "uppercase",
           },
-          '& .MuiTableCell-paddingCheckbox': {
+          "& .MuiTableCell-paddingCheckbox": {
             paddingTop: 4,
             paddingBottom: 4,
           },
@@ -149,420 +148,450 @@ export const theme = createTheme({
     },
 
     MuiDataGridToolbarContainer: {
-      styleOverrides: { backgroundColor: "red" }
+      styleOverrides: { backgroundColor: "red" },
     },
   },
   //======================= Custom Styling =========================
   //----------- Button ----------------------------------
+  // custom: {
+  //   Button: {
+  //     background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+  //     color: 'white',
+  //     width: "40%",
+  //     mt: 3
+  //   },
+  //   editButton: {
+  //     background: 'linear-gradient(43deg, #8b5704, #8b5704)',
+  //     color: 'white',
+  //     iconStyle: {
+  //       marginLeft: 1,
+  //       width: 23,
+  //       height: 23,
+  //     },
+  //   },
+  //   addButton: {
+  //     background: 'linear-gradient(43deg, #8b5704, #8b5704)',
+  //     color: 'white',
+  //     mt: 1,
+  //     fontWeight: 'bolder',
+  //   },
+  //   modal: {
+  //     background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
+  //     p: 7,
+  //     borderRadius: 1,
+  //     boxShadow: '0px 4px 1px 0px #d2c6c6',
+  //     border: '1px solid #d2c6c657',
+  //   },
+  //   selected: {
+  //     background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+  //     color: 'white',
+  //   },
+  //   //----------- Cards/Grid ----------------------------------
+  //   infoCard: {
+  //     bg: {
+  //       backgroundColor: "#FDFAF2",
+  //     },
+
+  //   },
+  //   margin: {
+  //     marginRight: 5
+  //   },
+  //   inventoryCard: {
+  //     bg: {
+  //       backgroundColor: "#FDFAF2",
+  //       display: "flex",
+  //       // justifyContent:"start",
+  //       cursor: "pointer",
+
+  //       width: "100%",
+  //       borderRadius: 1,
+  //       p: "10% 5%",
+  //       height: "100%",
+  //       boxShadow: '-3px 3px 4px -2px #d2c6c6',
+  //       border: '1px solid #d2c6c657',
+  //     },
+  //     selectedBg: {
+  //       backgroundColor: "#905E0F",
+  //       color: "white",
+  //       display: "flex",
+  //       // justifyContent:"start",
+  //       cursor: "pointer",
+
+  //       width: "100%",
+  //       borderRadius: 1,
+  //       p: "10% 5%",
+  //       height: "100%",
+  //       boxShadow: '-3px 3px 4px -2px #d2c6c6',
+  //       border: '1px solid #d2c6c657',
+  //     },
+  //   },
+  //   invoiceCard: {
+
+  //     p: 10,
+
+  //     borderRadius: 5,
+  //     backgroundColor: "white",
+  //     boxShadow: '-3px 3px 4px -2px #d2c6c6',
+  //     border: '1px solid #d2c6c657',
+  //   },
+  //   invoiceGridItem: {
+  //     padding: "2px 150px",
+  //     minWidth: "100%",
+  //     display: "flex",
+  //     justifyContent: "space-between",
+  //     alignItems: "space-between",
+  //     mb: 4,
+  //   },
+  //   retailCard: {
+  //     bg: {
+  //       backgroundColor: "#FDFAF2",
+  //       width: "50%",
+  //       borderRadius: 1,
+  //       p: "10% 20%",
+  //       // height: "100%",
+  //       boxShadow: '-3px 3px 4px -2px #d2c6c6',
+  //       border: '1px solid #d2c6c657',
+  //     }
+  //   },
+  //   buySaveCard: {
+  //     bg: {
+  //       backgroundColor: "#FDFAF2",
+  //       minWidth: "100%",
+  //       borderRadius: 1,
+
+  //       p: "2% 2%",
+  //       height: "100%",
+  //       boxShadow: '-3px 3px 4px -2px #d2c6c6',
+  //       border: '1px solid #d2c6c657',
+  //     },
+  //   },
+  //   cardModal: {
+  //     box: {
+  //       p: 2,
+  //       display: "flex",
+  //       justifyContent: "space-between",
+  //       width: 380,
+  //       background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
+  //       borderRadius: 1,
+  //       boxShadow: '0px 4px 1px 0px #d2c6c6',
+  //       border: '1px solid #d2c6c657',
+  //     }
+  //   },
+
+  //   //----------- Typography ----------------------------------
+  //   typography: {
+  //     infoCard: {
+  //       bg: {
+  //         backgroundColor: "#FDFAF2",
+
+  //       },
+  //       h1: {
+  //         fontFamily: "poppins",
+  //         color: "#0B0B0A",
+  //         fontSize: 20,
+  //         fontWeight: "medium",
+  //         mt: 5,
+  //         mb: 1
+
+  //       },
+  //       h2: {
+  //         fontFamily: "poppins",
+  //         fontSize: 16,
+  //         fontWeight: "medium",
+  //       },
+  //       h3: {
+  //         fontFamily: "poppins",
+  //         fontSize: 14,
+  //         // fontWeight: "regular",
+  //         mt: 2,
+  //         cursor: "pointer"
+  //       },
+  //     },
+  //     sideBar: {
+  //       fontFamily: "poppins",
+  //       fontSize: 16,
+  //       fontWeight: "bold",
+  //     },
+  //     dashBoard: {
+  //       heading: {
+  //         cursor: "pointer",
+  //         fontSize: 22,
+  //         color: "black",
+  //         fontWeight: "bold",
+  //         mt: 1
+  //       },
+  //       h1: {
+  //         fontFamily: "poppins",
+  //         color: "#905E0F",
+  //         fontSize: "18px",
+  //         fontWeight: "medium",
+  //         // overflowWrap:"wrap"
+  //         black: {
+  //           color: "black"
+  //         }
+
+  //       },
+  //       h2: {
+  //         fontFamily: "poppins",
+  //         fontSize: 26,
+  //         color: "#001737",
+  //         fontWeight: "bold",
+
+  //       },
+  //       h3: {
+  //         fontFamily: "poppins",
+  //         fontSize: 17,
+  //         color: "#495463",
+
+  //         error: {
+  //           color: "red",
+  //           mr: 1
+  //         },
+  //         success: {
+  //           color: "#14b8a6",
+  //           mr: 1
+  //         }
+  //       },
+  //     },
+  //     inventoryCard: {
+  //       heading: {
+  //         fontSize: 21,
+  //         fontWeight: "bolder",
+  //         color: "#8B5704",
+  //         mb: 2,
+  //         mt: 5
+  //       },
+  //       h1: {
+  //         fontSize: 19,
+  //         color: "#8B5704",
+  //         fontWeight: 600,
+  //         mb: 2
+  //       },
+  //       h2: {
+  //         fontSize: 22,
+  //         fontWeight: "bold",
+  //         color: "#001737"
+  //       },
+  //       selectedH1: {
+  //         fontSize: 19,
+  //         color: "white",
+  //         fontWeight: 600,
+  //         mb: 2
+  //       },
+  //       selectedH2: {
+  //         fontSize: 22,
+  //         fontWeight: "bold",
+  //         color: "white"
+  //       },
+  //       span: {
+  //         color: "gray",
+  //         fontSize: "15px"
+  //       },
+  //       selectedSpan: {
+  //         color: "white",
+  //         fontSize: "15px"
+  //       },
+  //     },
+  //     reports: {
+  //       fontWeight: 'regular',
+  //       fontSize: 20,
+  //       color: "gray",
+  //       lineHeight: 2.2
+  //     },
+  //     invoice: {
+  //       text_12: {
+  //         fontSize: 12,
+
+  //         fontWeight: "regular",
+  //         color: "black",
+  //         bold: {
+  //           fontWeight: "bold", color: "black", mr: 6
+  //         },
+  //         light: {
+  //           fontWeight: "light", color: "black"
+  //         }
+  //       },
+  //       text_16: {
+  //         fontSize: 16,
+  //         fontWeight: "bold",
+  //         color: "black"
+  //       },
+  //       text_24: {
+  //         fontSize: 24,
+  //         fontWeight: "medium",
+  //         color: "black",
+  //         mb: 3,
+  //         mt: 3
+  //       },
+  //       text_14: {
+  //         fontSzie: 14,
+  //         bold: {
+  //           fontWeight: "bold", color: "black"
+  //         },
+  //         light: {
+  //           fontWeight: "light", color: "black"
+  //         }
+  //       }
+  //     },
+  //     retailCard: {
+
+  //       h1: {
+  //         fontSize: "21px",
+  //         color: "#8B5704"
+  //       },
+  //       h2: {
+  //         fontSize: 27,
+  //         fontWeight: "bold",
+  //         color: "#001737",
+  //         mt: 3
+  //       },
+  //       h3: {
+  //         fontSize: 17,
+  //         fontWeight: "regular",
+  //         color: "#001737",
+  //         mt: 1
+  //       }
+  //     },
+  //     table: {
+  //       color: '#925F0F',
+  //       fontWeight: 600
+  //     },
+  //     cardModal: {
+  //       color: "black",
+  //       fontWeight: 500
+  //     }
+  //   }
+  // },
+
   custom: {
-    Button: {
-      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-      color: 'white',
-      width: "40%",
-      mt: 3
+    primary: {
+      main: "#ff9e80",
+      light: "#828DF8",
+      dark: "#3832A0",
+      contrastText: "#FFFFFF",
     },
-    editButton: {
-      background: 'linear-gradient(43deg, #8b5704, #8b5704)',
-      color: 'white',
-      iconStyle: {
-        marginLeft: 1,
-        width: 23,
-        height: 23,
+    secondary: {
+      main: "#ff9e80",
+      light: "#828DF8",
+      dark: "#3832A0",
+      contrastText: "#FFFFFF",
+    },
+    navbar: {
+      light: {
+        backgroundColor: "#ff855f",
+      },
+      dark: {
+        backgroundColor: "#bb2c00",
       },
     },
-    addButton: {
-      background: 'linear-gradient(43deg, #8b5704, #8b5704)',
-      color: 'white',
-      mt: 1,
-      fontWeight: 'bolder',
-    },
-    modal: {
-      background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
-      p: 7,
-      borderRadius: 1,
-      boxShadow: '0px 4px 1px 0px #d2c6c6',
-      border: '1px solid #d2c6c657',
-    },
-    selected: {
-      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-      color: 'white',
-    },
-    //----------- Cards/Grid ----------------------------------
-    infoCard: {
-      bg: {
-        backgroundColor: "#FDFAF2",
+    typography:{
+      h1:{
+        fontSize:"1.6rem",
+        fontWeight:"bold",
+        color:"gray"
       },
-
-    },
-    margin: {
-      marginRight: 5
-    },
-    inventoryCard: {
-      bg: {
-        backgroundColor: "#FDFAF2",
-        display: "flex",
-        // justifyContent:"start",
-        cursor: "pointer",
-
-        width: "100%",
-        borderRadius: 1,
-        p: "10% 5%",
-        height: "100%",
-        boxShadow: '-3px 3px 4px -2px #d2c6c6',
-        border: '1px solid #d2c6c657',
-      },
-      selectedBg: {
-        backgroundColor: "#905E0F",
-        color: "white",
-        display: "flex",
-        // justifyContent:"start",
-        cursor: "pointer",
-
-        width: "100%",
-        borderRadius: 1,
-        p: "10% 5%",
-        height: "100%",
-        boxShadow: '-3px 3px 4px -2px #d2c6c6',
-        border: '1px solid #d2c6c657',
-      },
-    },
-    invoiceCard: {
-
-      p: 10,
-
-      borderRadius: 5,
-      backgroundColor: "white",
-      boxShadow: '-3px 3px 4px -2px #d2c6c6',
-      border: '1px solid #d2c6c657',
-    },
-    invoiceGridItem: {
-      padding: "2px 150px",
-      minWidth: "100%",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "space-between",
-      mb: 4,
-    },
-    retailCard: {
-      bg: {
-        backgroundColor: "#FDFAF2",
-        width: "50%",
-        borderRadius: 1,
-        p: "10% 20%",
-        // height: "100%",
-        boxShadow: '-3px 3px 4px -2px #d2c6c6',
-        border: '1px solid #d2c6c657',
-      }
-    },
-    buySaveCard: {
-      bg: {
-        backgroundColor: "#FDFAF2",
-        minWidth: "100%",
-        borderRadius: 1,
-
-        p: "2% 2%",
-        height: "100%",
-        boxShadow: '-3px 3px 4px -2px #d2c6c6',
-        border: '1px solid #d2c6c657',
-      },
-    },
-    cardModal: {
-      box: {
-        p: 2,
-        display: "flex",
-        justifyContent: "space-between",
-        width: 380,
-        background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
-        borderRadius: 1,
-        boxShadow: '0px 4px 1px 0px #d2c6c6',
-        border: '1px solid #d2c6c657',
-      }
-    },
-
-    //----------- Typography ----------------------------------
-    typography: {
-      infoCard: {
-        bg: {
-          backgroundColor: "#FDFAF2",
-
-        },
-        h1: {
-          fontFamily: "poppins",
-          color: "#0B0B0A",
-          fontSize: 20,
-          fontWeight: "medium",
-          mt: 5,
-          mb: 1
-
-        },
-        h2: {
-          fontFamily: "poppins",
-          fontSize: 16,
-          fontWeight: "medium",
-        },
-        h3: {
-          fontFamily: "poppins",
-          fontSize: 14,
-          // fontWeight: "regular",
-          mt: 2,
-          cursor: "pointer"
-        },
-      },
-      sideBar: {
-        fontFamily: "poppins",
-        fontSize: 16,
-        fontWeight: "bold",
-      },
-      dashBoard: {
-        heading: {
-          cursor: "pointer",
-          fontSize: 22,
-          color: "black",
-          fontWeight: "bold",
-          mt: 1
-        },
-        h1: {
-          fontFamily: "poppins",
-          color: "#905E0F",
-          fontSize: "18px",
-          fontWeight: "medium",
-          // overflowWrap:"wrap"
-          black: {
-            color: "black"
-          }
-
-
-        },
-        h2: {
-          fontFamily: "poppins",
-          fontSize: 26,
-          color: "#001737",
-          fontWeight: "bold",
-
-        },
-        h3: {
-          fontFamily: "poppins",
-          fontSize: 17,
-          color: "#495463",
-
-          error: {
-            color: "red",
-            mr: 1
-          },
-          success: {
-            color: "#14b8a6",
-            mr: 1
-          }
-        },
-      },
-      inventoryCard: {
-        heading: {
-          fontSize: 21,
-          fontWeight: "bolder",
-          color: "#8B5704",
-          mb: 2,
-          mt: 5
-        },
-        h1: {
-          fontSize: 19,
-          color: "#8B5704",
-          fontWeight: 600,
-          mb: 2
-        },
-        h2: {
-          fontSize: 22,
-          fontWeight: "bold",
-          color: "#001737"
-        },
-        selectedH1: {
-          fontSize: 19,
-          color: "white",
-          fontWeight: 600,
-          mb: 2
-        },
-        selectedH2: {
-          fontSize: 22,
-          fontWeight: "bold",
-          color: "white"
-        },
-        span: {
-          color: "gray",
-          fontSize: "15px"
-        },
-        selectedSpan: {
-          color: "white",
-          fontSize: "15px"
-        },
-      },
-      reports: {
-        fontWeight: 'regular',
-        fontSize: 20,
-        color: "gray",
-        lineHeight: 2.2
-      },
-      invoice: {
-        text_12: {
-          fontSize: 12,
-
-          fontWeight: "regular",
-          color: "black",
-          bold: {
-            fontWeight: "bold", color: "black", mr: 6
-          },
-          light: {
-            fontWeight: "light", color: "black"
-          }
-        },
-        text_16: {
-          fontSize: 16,
-          fontWeight: "bold",
-          color: "black"
-        },
-        text_24: {
-          fontSize: 24,
-          fontWeight: "medium",
-          color: "black",
-          mb: 3,
-          mt: 3
-        },
-        text_14: {
-          fontSzie: 14,
-          bold: {
-            fontWeight: "bold", color: "black"
-          },
-          light: {
-            fontWeight: "light", color: "black"
-          }
-        }
-      },
-      retailCard: {
-
-        h1: {
-          fontSize: "21px",
-          color: "#8B5704"
-        },
-        h2: {
-          fontSize: 27,
-          fontWeight: "bold",
-          color: "#001737",
-          mt: 3
-        },
-        h3: {
-          fontSize: 17,
-          fontWeight: "regular",
-          color: "#001737",
-          mt: 1
-        }
-      },
-      table: {
-        color: '#925F0F',
-        fontWeight: 600
-      },
-      cardModal: {
-        color: "black",
-        fontWeight: 500
-      }
+      h2:{}
     }
   },
-
 
   //==================================================================
   palette: {
     neutral: {
-      100: '#F3F4F6',
-      200: '#E5E7EB',
-      300: '#D1D5DB',
-      400: '#9CA3AF',
-      500: '#6B7280',
-      600: '#4B5563',
-      700: '#374151',
-      800: '#1F2937',
-      900: '#111827',
+      100: "#F3F4F6",
+      200: "#E5E7EB",
+      300: "#D1D5DB",
+      400: "#9CA3AF",
+      500: "#6B7280",
+      600: "#4B5563",
+      700: "#374151",
+      800: "#1F2937",
+      900: "#111827",
     },
     action: {
-      active: '#6B7280',
-      focus: 'rgba(55, 65, 81, 0.12)',
-      hover: '#ff7f5680',
-      selected: 'rgba(55, 65, 81, 0.08)',
-      disabledBackground: 'rgba(55, 65, 81, 0.12)',
-      disabled: 'rgba(55, 65, 81, 0.26)',
+      active: "#6B7280",
+      focus: "rgba(55, 65, 81, 0.12)",
+      hover: "#acb2ef",
+
+      selected: "rgba(55, 65, 81, 0.08)",
+      disabledBackground: "rgba(55, 65, 81, 0.12)",
+      disabled: "rgba(55, 65, 81, 0.26)",
     },
     background: {
-      default: '#F9FAFC',
-      paper: '#FFFFFF',
+      default: "#F9FAFC",
+      paper: "#FFFFFF",
     },
-    divider: '#E6E8F0',
+    divider: "#E6E8F0",
     primary: {
-      main: '#5048E5',
-      light: '#828DF8',
-      dark: '#3832A0',
-      contrastText: '#FFFFFF',
+      main: "#ff9e80",
+      light: "#828DF8",
+      dark: "#3832A0",
+      contrastText: "#FFFFFF",
     },
     secondary: {
-      main: '#10B981',
-      light: '#3FC79A',
-      dark: '#0B815A',
-      contrastText: '#FFFFFF',
+      main: "#80E1FF",
+      light: "#3FC79A",
+      dark: "#0B815A",
+      contrastText: "#FFFFFF",
     },
     success: {
-      main: '#14B8A6',
-      light: '#43C6B7',
-      dark: '#0E8074',
-      contrastText: '#FFFFFF',
+      main: "#14B8A6",
+      light: "#43C6B7",
+      dark: "#0E8074",
+      contrastText: "#FFFFFF",
     },
     info: {
-      main: '#2196F3',
-      light: '#64B6F7',
-      dark: '#0B79D0',
-      contrastText: '#FFFFFF',
+      main: "#2196F3",
+      light: "#64B6F7",
+      dark: "#0B79D0",
+      contrastText: "#FFFFFF",
     },
     warning: {
-      main: '#FFB020',
-      light: '#FFBF4C',
-      dark: '#B27B16',
-      contrastText: '#FFFFFF',
+      main: "#FFB020",
+      light: "#FFBF4C",
+      dark: "#B27B16",
+      contrastText: "#FFFFFF",
     },
     error: {
-      main: '#D14343',
-      light: '#DA6868',
-      dark: '#922E2E',
-      contrastText: '#FFFFFF',
+      main: "#D14343",
+      light: "#DA6868",
+      dark: "#922E2E",
+      contrastText: "#FFFFFF",
     },
     text: {
-      primary: '#121828',
-      secondary: '#65748B',
-      disabled: 'rgba(55, 65, 81, 0.48)',
+      primary: "#121828",
+      secondary: "#65748B",
+      disabled: "rgba(55, 65, 81, 0.48)",
     },
   },
   shape: {
     borderRadius: 8,
   },
   shadows: [
-    'none',
-    '0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)',
-    '0px 1px 2px rgba(100, 116, 139, 0.12)',
-    '0px 1px 4px rgba(100, 116, 139, 0.12)',
-    '0px 1px 5px rgba(100, 116, 139, 0.12)',
-    '0px 1px 6px rgba(100, 116, 139, 0.12)',
-    '0px 2px 6px rgba(100, 116, 139, 0.12)',
-    '0px 3px 6px rgba(100, 116, 139, 0.12)',
-    '0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)',
-    '0px 5px 12px rgba(100, 116, 139, 0.12)',
-    '0px 5px 14px rgba(100, 116, 139, 0.12)',
-    '0px 5px 15px rgba(100, 116, 139, 0.12)',
-    '0px 6px 15px rgba(100, 116, 139, 0.12)',
-    '0px 7px 15px rgba(100, 116, 139, 0.12)',
-    '0px 8px 15px rgba(100, 116, 139, 0.12)',
-    '0px 9px 15px rgba(100, 116, 139, 0.12)',
-    '0px 10px 15px rgba(100, 116, 139, 0.12)',
-    '0px 12px 22px -8px rgba(100, 116, 139, 0.25)',
-    '0px 13px 22px -8px rgba(100, 116, 139, 0.25)',
-    '0px 14px 24px -8px rgba(100, 116, 139, 0.25)',
-    '0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
+    "none",
+    "0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)",
+    "0px 1px 2px rgba(100, 116, 139, 0.12)",
+    "0px 1px 4px rgba(100, 116, 139, 0.12)",
+    "0px 1px 5px rgba(100, 116, 139, 0.12)",
+    "0px 1px 6px rgba(100, 116, 139, 0.12)",
+    "0px 2px 6px rgba(100, 116, 139, 0.12)",
+    "0px 3px 6px rgba(100, 116, 139, 0.12)",
+    "0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)",
+    "0px 5px 12px rgba(100, 116, 139, 0.12)",
+    "0px 5px 14px rgba(100, 116, 139, 0.12)",
+    "0px 5px 15px rgba(100, 116, 139, 0.12)",
+    "0px 6px 15px rgba(100, 116, 139, 0.12)",
+    "0px 7px 15px rgba(100, 116, 139, 0.12)",
+    "0px 8px 15px rgba(100, 116, 139, 0.12)",
+    "0px 9px 15px rgba(100, 116, 139, 0.12)",
+    "0px 10px 15px rgba(100, 116, 139, 0.12)",
+    "0px 12px 22px -8px rgba(100, 116, 139, 0.25)",
+    "0px 13px 22px -8px rgba(100, 116, 139, 0.25)",
+    "0px 14px 24px -8px rgba(100, 116, 139, 0.25)",
+    "0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
   ],
   // typography: {
   //   button: {
@@ -635,15 +664,13 @@ export const theme = createTheme({
   // },
 });
 
-
 export const themeHai = createTheme({
   colors: {
     primary: {
-      color: 'blue',
+      color: "blue",
     },
     secondary: {
-      color: 'green',
+      color: "green",
     },
   },
 });
-
