@@ -31,13 +31,8 @@ export default function Register() {
   const [tripple, setTripple] = React.useState(false);
   const { query, add, addForm } = useController();
   const [image, setImage] = React.useState("");
-  // useEffect(() => {
-  //   getUsers().then((res) => console.log("---->", res.data.user));
-  // }, []);
-  if (query.isLoading) {
-    return <Loading />;
-  }
-  // console.log("xxx ---", addForm.errors);
+  
+ 
   //===================================================
   return (
     <Box
@@ -365,7 +360,6 @@ export default function Register() {
             </Grid>
           </Grid>
           <LoadingButton
-            onClick={() => console.log("xxx----->", addForm.values)}
             disabled={add.isLoading}
             loading={add.isLoading}
             type="submit"

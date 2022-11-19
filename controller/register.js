@@ -8,12 +8,7 @@ import { useRouter } from "next/router";
 //=========================================
 export const useController = () => {
   const router = useRouter();
-  //------------------ QUERY -------------------------------------
-  const query = useQuery({
-    queryKey: ["user"],
-    queryFn: getUsers,
-  });
-
+  
   //------------------ ADD_FORM -------------------------------------
   const addForm = useFormik({
     initialValues: {
@@ -37,22 +32,17 @@ export const useController = () => {
     mutationFn: register,
     onSuccess: (res) => {
       query.refetch();
-      //   setShowAdd(false);
-      //   addForm.resetForm();
       Swal.fire(
         "User Registered !",
         "Please wait for the Admin's Apporval",
         "success"
       );
-      router.push("/user-dashboard/home");
+      router.push("/admin/home");
     },
     onError: (err) =>
-      // console.log("error ----<>",err.response.data.details[0].message)
-      // Swal.fire("Error !", err.response.data, "error") ||
-      // Swal.fire("Error !", err.response.data.errors.phone.message, "error"),
       Swal.fire("Error !", err.response.data.errors? (err.response.data.errors.phone.message) : (err.response.data), "error"),
 
   });
 
-  return { query, add, addForm };
+  return {  add, addForm };
 };
