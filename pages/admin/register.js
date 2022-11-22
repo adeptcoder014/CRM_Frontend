@@ -29,6 +29,7 @@ import { useFormik } from "formik";
 import { approvalValidation } from "../../validation/approval";
 import { approval } from "../../api/approval";
 import { Query, useMutation } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 //============================================================================
 export default function RegisterUser() {
@@ -40,7 +41,7 @@ export default function RegisterUser() {
     queryFn: () => getUserById(router.query.id),
     onSuccess: (res) =>
       // console.log("res---",res.data),
-      patchForm.setValues(res.data),
+      patchForm.setValues(res.data.userById),
     enabled: !!router.query.id,
   });
 
@@ -54,9 +55,9 @@ export default function RegisterUser() {
     },
     validationSchema: approvalValidation,
     onSubmit: (values) => {
-      // console.log("values---",values)
+      console.log("values---",values)
 
-      patch.mutate({ data: values, id: router.query.id });
+      // patch.mutate({ data: values, id: router.query.id });
     },
   });
   //------------------- ADD -------------------------------------
@@ -64,10 +65,11 @@ export default function RegisterUser() {
   const patch = useMutation({
     mutationFn: approval,
     onSuccess: (res) => {
-      //   query.refetch();
-      alert("Final Registration Completed");
-      // Swal.fire("User Registered !", "Final Registration Completed", "success");
-      router.push("/admin/home");
+      return Swal.fire(
+        "Registration Done ",
+        "User is registered ",
+        "success"
+      ).then(() => router.push("/admin/home"));
     },
     onError: (err) => Swal.fire("Error !", err.response.data, "error"),
   });
@@ -76,6 +78,7 @@ export default function RegisterUser() {
   if (query.isLoading) {
     return <Loading />;
   }
+  // console.log("---->", query.data.data.userById);
   //============================================
   return (
     <>
@@ -102,7 +105,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data.data.name}
+              {query?.data?.data?.userById?.name}
             </Typography>
             <Typography
               sx={{
@@ -112,7 +115,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data.data.email}
+              {query?.data?.data?.userById?.email}
             </Typography>
             <Typography
               sx={{
@@ -122,7 +125,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data.data.phone}
+              {query?.data?.data?.userById?.phone}
             </Typography>
           </Grid>
           <Grid item xl={5} lg={5} md={4} xs={12}>
@@ -165,7 +168,8 @@ export default function RegisterUser() {
                 fontFamily: "poppins",
               }}
             >
-              {query?.data.data.dob}
+              {query?.data?.data?.zodiac?.symbol}{" "}
+              {query?.data?.data?.zodiac?.name}
             </Typography>
           </Grid>
         </Grid>
@@ -310,27 +314,32 @@ export default function RegisterUser() {
                 xs={12}
                 sx={{ display: "flex", flexDirection: "column", mt: 5 }}
               >
-                <FormControl>
-                  <FormLabel>Security</FormLabel>
-                  <Select
-                    id="security"
-                    name="security"
-                    value={patchForm.values.security}
-                    onChange={(e) => {
-                      patchForm.setFieldValue("security", e.target.value);
-                    }}
-                    variant="standard"
-                    startAdornment={
+                <FormLabel sx={{ mb: 2 }}>security</FormLabel>
+
+                <TextField
+                  error={
+                    patchForm.touched.discount &&
+                    Boolean(patchForm.errors.security)
+                  }
+                  helperText={
+                    patchForm.touched.security && patchForm.errors.security
+                  }
+                  id="security"
+                  name="security"
+                  type="number"
+                  value={patchForm.values.security}
+                  onChange={patchForm.handleChange}
+                  sx={{ width: "90%" }}
+                  size="small"
+                  variant="standard"
+                  InputProps={{
+                    startAdornment: (
                       <InputAdornment position="start">
                         <GppMaybeIcon />
                       </InputAdornment>
-                    }
-                    sx={{ width: "90%", mt: 4 }}
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </Select>
-                </FormControl>
+                    ),
+                  }}
+                />
               </Grid>
               <Grid
                 className="responsive"
@@ -368,12 +377,12 @@ export default function RegisterUser() {
             </Grid>
             <LoadingButton
               fullWidth
-              onClick={() => console.log("xxx----->", router.query.id)}
+              // onClick={() => console.log("xxx----->", router.query.id)}
               disabled={patch.isLoading}
               loading={patch.isLoading}
               type="submit"
               sx={{
-                backgroundColor: "#f76334",
+                backgroundColor: "#ff855f",
                 color: "white",
                 // width: "50%",
                 fontSize: 16,
@@ -382,8 +391,9 @@ export default function RegisterUser() {
                 borderRadius: "100px",
                 p: 2,
                 "&:hover": {
-                  color: "red",
-                  border: "2px solid #ff7f56",
+                  color: "#ff855f",
+                  fontWeight: "bolder",
+                  border: "2px solid #ff855f",
                   backgroundColor: "white",
                 },
               }}

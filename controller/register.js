@@ -4,11 +4,15 @@ import { getUsers } from "../api/user";
 import { registrationValidation } from "../validation/register";
 import { useFormik } from "formik";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { Alert, AlertTitle, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 //=========================================
 export const useController = () => {
+  const MySwal = withReactContent(Swal);
+
   const router = useRouter();
-  
+
   //------------------ ADD_FORM -------------------------------------
   const addForm = useFormik({
     initialValues: {
@@ -31,18 +35,21 @@ export const useController = () => {
   const add = useMutation({
     mutationFn: register,
     onSuccess: (res) => {
-      query.refetch();
-      Swal.fire(
-        "User Registered !",
-        "Please wait for the Admin's Apporval",
+      return Swal.fire(
+        "Registration Done ",
+        "Wait for the Admin approval",
         "success"
-      );
-      router.push("/admin/home");
+      ).then(() => router.push("/user/home"));
     },
     onError: (err) =>
-      Swal.fire("Error !", err.response.data.errors? (err.response.data.errors.phone.message) : (err.response.data), "error"),
-
+      Swal.fire(
+        "Error !",
+        err.response.data.errors
+          ? err.response.data.errors.phone.message
+          : err.response.data,
+        "error"
+      ),
   });
 
-  return {  add, addForm };
+  return { add, addForm };
 };

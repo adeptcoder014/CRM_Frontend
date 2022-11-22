@@ -10,18 +10,20 @@ import Loading from "../../components/loading";
 import { DataGrid, gridClasses, GridToolbar } from "@mui/x-data-grid";
 import Table from "../../components/table";
 import { useRouter } from "next/router";
+import { deleteUser } from "../../api/user";
+import Swal from "sweetalert2";
 //==========================================================
 export default function Home(props) {
   const router = useRouter();
   const { sidebarOpen, setSidebarOpen } = useSidebarOpen();
   const theme = useTheme();
-  const { query } = useController();
+  const { query } = useController({filter:"NEW"});
 
   if (query.isLoading) {
     return <Loading />;
   }
 
-  console.log("Query ---->", query.data.data.user);
+  // console.log("Query ---->", query.data.data.user);
   //===================================================
   const columns = [
     {
@@ -71,6 +73,40 @@ export default function Home(props) {
           }}
         >
           Register
+        </Button>
+      ),
+      flex: 1,
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      minWidth: 150,
+      editable: true,
+      renderCell: (params) => (
+        <Button
+          sx={{
+            backgroundColor: "red",
+            border: "1px solid #ff855f",
+            color: "white",
+          }}
+          variant="outlined"
+          onClick={() => {
+            console.log(params.id)
+            deleteUser(params.id).then(()=>{
+              return(
+                Swal.fire(
+                  "User deleted ","User has been un-registered","success"
+                ).then(()=>{
+
+                  query.refetch(),
+                  router.push("/admin/home")
+                } 
+                )
+              )
+            })
+          }}
+        >
+          Delete
         </Button>
       ),
       flex: 1,
