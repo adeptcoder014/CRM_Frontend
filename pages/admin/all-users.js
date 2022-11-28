@@ -1,31 +1,17 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import { Button, Typography, Container, Grid } from "@mui/material";
-import Image from "next/image";
+import { Typography, Container, Box ,Button} from "@mui/material";
+import { useTheme } from "@mui/styles";
 import DashboardLayout from "../../components/layout/dashboard-layout";
-import { useSidebarOpen } from "../../context/sidebarOpen";
 import { useController } from "../../controller/user";
-import Loading from "../../components/loading";
-import { DataGrid, gridClasses, GridToolbar } from "@mui/x-data-grid";
 import Table from "../../components/table";
-import { useRouter } from "next/router";
-import { deleteUser } from "../../api/user";
-import Swal from "sweetalert2" ;
-import InfoCard from "../../components/cards/InfoCard";
-//==========================================================
-export default function Home(props) {
-  const router = useRouter();
-  const { sidebarOpen, setSidebarOpen } = useSidebarOpen();
+import Loading from "../../components/loading";
+//==========================================
+export default function AllUsers() {
   const theme = useTheme();
-  const { query } = useController({ filter: "NEW" });
+  const { queryAll } = useController();
 
-  if (query.isLoading) {
+  if (queryAll.isLoading) {
     return <Loading />;
   }
-
-  // console.log("Query ---->", query.data.data.user);
-  //===================================================
   const columns = [
     {
       field: "name",
@@ -68,10 +54,10 @@ export default function Home(props) {
             color: "#ff855f",
           }}
           variant="outlined"
-            onClick={() => {
-              // console.log("------>",params.id)
-              router.push(`/admin/register/?id=${params.id}`);
-            }}
+          onClick={() => {
+            // console.log("------>",params.id)
+            router.push(`/admin/register/?id=${params.id}`);
+          }}
         >
           Register
         </Button>
@@ -111,35 +97,22 @@ export default function Home(props) {
     },
   ];
 
-  //========================================================
-
+  //===============================
   return (
-    <Box
-      sx={{
-        ...(sidebarOpen && {
-          width: "calc(100% + 250px)",
-        }),
-      }}
-    >
-      <Grid sx={{ cursor: "pointer" }} container>
-        <InfoCard title="All Users" url="/admin/all-users" />
-        <InfoCard title="All Registered Users" />
-      </Grid>
-      {/* ==========  Main_Content =========================== */}
-
+    <>
+      <Typography
+        variant="h5"
+        sx={[theme.custom.typography.h1, { mb: 5, mt: 5 }]}
+      >
+        All Users are :
+      </Typography>
       <Container>
-        <Typography
-          variant="h5"
-          sx={[theme.custom.typography.h1, { mb: 5, mt: 5 }]}
-        >
-          Newly registered Users :
-        </Typography>
-
         <Box sx={{ height: 400, minWidth: "100%" }}>
-          <Table rows={query?.data?.data?.user} columns={columns} />
+          <Table rows={queryAll?.data?.data?.user} columns={columns} />
         </Box>
       </Container>
-    </Box>
+    </>
   );
 }
-Home.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+AllUsers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

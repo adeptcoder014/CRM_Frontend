@@ -25,14 +25,18 @@ import { useController } from "../controller/register";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "./loading";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { useRentController } from "../controller/rent";
 //===================================================
 export default function Register() {
   const [double, setDouble] = React.useState(false);
   const [tripple, setTripple] = React.useState(false);
   const { query, add, addForm } = useController();
   const [image, setImage] = React.useState("");
-  
- 
+
+  const { rentQuery } = useRentController();
+  if (!rentQuery.isLoading) {
+    console.log("--->>", rentQuery.data.data.data[0].doubble);
+  }
   //===================================================
   return (
     <Box
@@ -311,34 +315,33 @@ export default function Register() {
 
               {/* <InputAdornment position='start'><AccountCircleIcon/></InputAdornment> */}
 
-              <FormControl >
-                  <Select
-                    
-                    id="roomPreference"
-                    name="roomPreference"
-                    value={addForm.values.roomPreference}
-                    onChange={(e) => {
-                      if (e.target.value === "double") {
-                        setDouble(true);
-                        setTripple(false);
-                      }
-                      if (e.target.value === "tripple") {
-                        setDouble(false);
-                        setTripple(true);
-                      }
-                      addForm.setFieldValue("roomPreference", e.target.value);
-                    }}
-                    variant="standard"
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <HotelIcon />
-                      </InputAdornment>
+              <FormControl>
+                <Select
+                  id="roomPreference"
+                  name="roomPreference"
+                  value={addForm.values.roomPreference}
+                  onChange={(e) => {
+                    if (e.target.value === "double") {
+                      setDouble(true);
+                      setTripple(false);
                     }
-                    sx={{ width: "90%", mt: 4 }}
-                  >
-                    <MenuItem value="double">Double</MenuItem>
-                    <MenuItem value="tripple">Tripple</MenuItem>
-                  </Select>
+                    if (e.target.value === "tripple") {
+                      setDouble(false);
+                      setTripple(true);
+                    }
+                    addForm.setFieldValue("roomPreference", e.target.value);
+                  }}
+                  variant="standard"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <HotelIcon />
+                    </InputAdornment>
+                  }
+                  sx={{ width: "90%", mt: 4 }}
+                >
+                  <MenuItem value="double">Double</MenuItem>
+                  <MenuItem value="tripple">Tripple</MenuItem>
+                </Select>
               </FormControl>
               {/* ============= Conditional Rendering ====================== */}
               {double ? (
@@ -346,14 +349,18 @@ export default function Register() {
                   <span style={{ fontWeight: "bolder", color: "gray" }}>
                     Rent :
                   </span>{" "}
-                  ₹7000
+                  <span style={{ fontWeight: 'bold', backgroundColor: "#28282B",color:"white",padding:5,borderRadius:5 }}>
+                    ₹ {rentQuery?.data?.data?.data[0].doubble}
+                  </span>
                 </Typography>
               ) : tripple ? (
                 <Typography sx={{ mt: 2, color: "black", fontWeight: 500 }}>
                   <span style={{ fontWeight: "bolder", color: "gray" }}>
                     Rent :
                   </span>{" "}
-                  ₹9000
+                  <span style={{ fontWeight: 'bold', backgroundColor: "#28282B",color:"white",padding:5,borderRadius:5 }}>
+                    ₹ {rentQuery?.data?.data?.data[0].tripple}
+                  </span>
                 </Typography>
               ) : null}
               {/* //=========================================================== */}

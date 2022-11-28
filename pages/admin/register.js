@@ -10,9 +10,9 @@ import {
   TextField,
   FormLabel,
   InputAdornment,
-  FormControl,
-  Select,
-  MenuItem,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "../../components/loading";
@@ -24,16 +24,16 @@ import ElectricMeterIcon from "@mui/icons-material/ElectricMeter";
 import DiscountIcon from "@mui/icons-material/Discount";
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import CommentIcon from "@mui/icons-material/Comment";
-import { useController } from "../../controller/approval";
 import { useFormik } from "formik";
 import { approvalValidation } from "../../validation/approval";
 import { approval } from "../../api/approval";
 import { Query, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useRentController } from "../../controller/rent";
 //============================================================================
 export default function RegisterUser() {
-  // const { patch, patchForm } = useController();
+  const { rentQuery } = useRentController();
 
   const router = useRouter();
   const query = useQuery({
@@ -41,36 +41,33 @@ export default function RegisterUser() {
     queryFn: () => getUserById(router.query.id),
     onSuccess: (res) =>
       // console.log("res---",res.data),
-      patchForm.setValues(res.data.userById),
+      patchForm.setValues(res.data),
     enabled: !!router.query.id,
   });
 
   const patchForm = useFormik({
     initialValues: {
-      room: "",
-      meterReading: "",
-      discount: "",
+      room: 0,
+      meterReading: 0,
+      discount: 0,
       security: false,
       remark: "",
     },
     validationSchema: approvalValidation,
     onSubmit: (values) => {
-      console.log("values---",values)
+      console.log("values---", values);
 
-      // patch.mutate({ data: values, id: router.query.id });
+      patch.mutate({ data: values, id: router.query.id });
     },
   });
   //------------------- ADD -------------------------------------
 
   const patch = useMutation({
     mutationFn: approval,
-    onSuccess: (res) => {
-      return Swal.fire(
-        "Registration Done ",
-        "User is registered ",
-        "success"
-      ).then(() => router.push("/admin/home"));
-    },
+    onSuccess: (res) =>
+      Swal.fire("Registration Done ", "User is registered ", "success").then(
+        () => router.push("/admin/home")
+      ),
     onError: (err) => Swal.fire("Error !", err.response.data, "error"),
   });
 
@@ -78,7 +75,10 @@ export default function RegisterUser() {
   if (query.isLoading) {
     return <Loading />;
   }
-  // console.log("---->", query.data.data.userById);
+  if (!rentQuery.isLoading) {
+    console.log("---->", rentQuery.data.data.data);
+  }
+
   //============================================
   return (
     <>
@@ -105,7 +105,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data?.data?.userById?.name}
+              {query?.data?.data?.name}
             </Typography>
             <Typography
               sx={{
@@ -115,7 +115,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data?.data?.userById?.email}
+              {query?.data?.data?.email}
             </Typography>
             <Typography
               sx={{
@@ -125,7 +125,7 @@ export default function RegisterUser() {
                 ml: 1,
               }}
             >
-              {query?.data?.data?.userById?.phone}
+              {query?.data?.data?.phone}
             </Typography>
           </Grid>
           <Grid item xl={5} lg={5} md={4} xs={12}>
@@ -176,6 +176,7 @@ export default function RegisterUser() {
       </Container>
 
       {/* ===================== FORM ================================== */}
+
       <Container
         maxWidth="lg"
         sx={{
@@ -220,7 +221,7 @@ export default function RegisterUser() {
                   id="room"
                   type="number"
                   name="room"
-                  value={patchForm.values.room}
+                  value={patchForm?.values?.room}
                   onChange={patchForm.handleChange}
                   sx={{
                     width: "90%",
@@ -259,7 +260,7 @@ export default function RegisterUser() {
                   id="meterReading"
                   name="meterReading"
                   type="number"
-                  value={patchForm.values.meterReading}
+                  value={patchForm?.values?.meterReading}
                   onChange={patchForm.handleChange}
                   sx={{ width: "90%" }}
                   size="small"
@@ -273,6 +274,7 @@ export default function RegisterUser() {
                   }}
                 />
               </Grid>
+
               <Grid
                 className="responsive"
                 item
@@ -282,7 +284,7 @@ export default function RegisterUser() {
               >
                 <FormLabel sx={{ mb: 2 }}>Discount</FormLabel>
 
-                <TextField
+                {/* <TextField
                   error={
                     patchForm.touched.discount &&
                     Boolean(patchForm.errors.discount)
@@ -293,7 +295,7 @@ export default function RegisterUser() {
                   id="discount"
                   name="discount"
                   type="number"
-                  value={patchForm.values.discount}
+                  value={patchForm?.values?.discount}
                   onChange={patchForm.handleChange}
                   sx={{ width: "90%" }}
                   size="small"
@@ -305,7 +307,26 @@ export default function RegisterUser() {
                       </InputAdornment>
                     ),
                   }}
-                />
+                /> */}
+                <div style={{ width: "90%" }}>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>Rent Structure</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>Yeh lo</Typography>
+                      <ul>
+                        <li>Yeh hai ki tum pehel se aaye ho </li>
+                      </ul>
+
+                      <Typography>Yeh lo</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
               </Grid>
               <Grid
                 className="responsive"
@@ -327,7 +348,11 @@ export default function RegisterUser() {
                   id="security"
                   name="security"
                   type="number"
-                  value={patchForm.values.security}
+                  defaultValue={
+                    query.data.data.roomPreference == "double"
+                      ? rentQuery?.data?.data?.data[0].doubble
+                      : rentQuery?.data?.data?.data[0].tripple
+                  }
                   onChange={patchForm.handleChange}
                   sx={{ width: "90%" }}
                   size="small"
@@ -360,7 +385,7 @@ export default function RegisterUser() {
                   }
                   id="remark"
                   name="remark"
-                  value={patchForm.values.remark}
+                  value={patchForm?.values?.remark}
                   onChange={patchForm.handleChange}
                   sx={{ width: "90%" }}
                   size="small"

@@ -1,9 +1,12 @@
 import axios from "axios";
 import { ADMIN_URL } from "../constants/url";
 //=================================================
-export const getUsers = (filter) => {
-  console.log("filter --->", filter);
+export const getFilteredUsers = (filter) => {
   return axios.post(`${ADMIN_URL}/user`,filter);
+};
+//------------------------------------
+export const getAllUsers = () => {
+  return axios.get(`${ADMIN_URL}/user/list`);
 };
 //------------------------------------
 export const getUserById = (id) => {

@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../api/user";
+import { getAllUsers, getFilteredUsers } from "../api/user";
 
 export const useController = (props) => {
   //------------------ QUERY -------------------------------------
   const query = useQuery({
-    queryKey: ["user",props.filter ],
-    queryFn: () => getUsers({ filter: props.filter }),
+    queryKey: ["user"],
+    queryFn: () => getFilteredUsers({ filter: props.filter }),
   });
 
-  return { query };
+  const queryAll = useQuery({
+    queryKey: ["allUsers"],
+    queryFn: getAllUsers,
+  });
+
+  return { query, queryAll };
 };
