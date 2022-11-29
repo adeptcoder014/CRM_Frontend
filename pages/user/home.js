@@ -1,5 +1,5 @@
 export default function Home(){
     return (
-        <h1>User's Main Dashboard Here -------</h1>
+        <h1>User_Dashboard</h1>
     )
 }
