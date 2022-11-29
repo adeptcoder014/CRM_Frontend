@@ -35,7 +35,7 @@ export default function Registration() {
 
   const { rentQuery } = useRentController();
   if (!rentQuery.isLoading) {
-    console.log("--->>", rentQuery.data.data.data[0].doubble);
+    // console.log("--->>", rentQuery.data.data.data[0].doubble);
   }
   //===================================================
   return (
@@ -349,8 +349,16 @@ export default function Registration() {
                   <span style={{ fontWeight: "bolder", color: "gray" }}>
                     Rent :
                   </span>{" "}
-                  <span style={{ fontWeight: 'bold', backgroundColor: "#28282B",color:"white",padding:5,borderRadius:5 }}>
-                    ₹ {rentQuery?.data?.data?.data[0].doubble}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      backgroundColor: "#28282B",
+                      color: "white",
+                      padding: 5,
+                      borderRadius: 5,
+                    }}
+                  >
+                    ₹ {rentQuery ? rentQuery?.data?.data?.data[0].doubble : 000}
                   </span>
                 </Typography>
               ) : tripple ? (
@@ -358,8 +366,16 @@ export default function Registration() {
                   <span style={{ fontWeight: "bolder", color: "gray" }}>
                     Rent :
                   </span>{" "}
-                  <span style={{ fontWeight: 'bold', backgroundColor: "#28282B",color:"white",padding:5,borderRadius:5 }}>
-                    ₹ {rentQuery?.data?.data?.data[0].tripple}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      backgroundColor: "#28282B",
+                      color: "white",
+                      padding: 5,
+                      borderRadius: 5,
+                    }}
+                  >
+                    ₹ {rentQuery ? rentQuery?.data?.data?.data[0].tripple : 000}
                   </span>
                 </Typography>
               ) : null}
