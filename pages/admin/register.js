@@ -30,7 +30,7 @@ import { approval } from "../../api/approval";
 import { Query, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useRentController } from "../../controller/rent";
+import { useRentController } from "../../controller/rental";
 //============================================================================
 export default function RegisterUser() {
   const { rentQuery } = useRentController();
@@ -50,7 +50,7 @@ export default function RegisterUser() {
       room: 0,
       meterReading: 0,
       discount: 0,
-      security: false,
+      security: 0,
       remark: "",
     },
     validationSchema: approvalValidation,
@@ -75,11 +75,21 @@ export default function RegisterUser() {
   if (query.isLoading) {
     return <Loading />;
   }
-  if (!rentQuery.isLoading) {
-    console.log("---->", rentQuery.data.data.data);
+  if (rentQuery.isLoading) {
+    return <Loading />;
   }
-
+  //============ RENTAL_STRUCTURE ================================
+  const giveRemainingRent = (days) => {
+    const remainingDays = 30 - days;
+    const remainingRent =
+      remainingDays * rentQuery.data.data.data[0].rentPerDay;
+    return { remainingDays, remainingRent };
+  };
   //============================================
+  const dueRent = giveRemainingRent(
+    query?.data?.data?.registeredDate.split("T")[0].split("-")[2]
+  );
+  //=====================================================
   return (
     <>
       <Container
@@ -282,7 +292,7 @@ export default function RegisterUser() {
                 xs={12}
                 sx={{ display: "flex", flexDirection: "column", mt: 5 }}
               >
-                <FormLabel sx={{ mb: 2 }}>Discount</FormLabel>
+                <FormLabel sx={{ mb: 2 }}>Rent Structure</FormLabel>
 
                 {/* <TextField
                   error={
@@ -308,22 +318,72 @@ export default function RegisterUser() {
                     ),
                   }}
                 /> */}
-                <div style={{ width: "90%" }}>
+                <div style={{ width: "90%", marginTop: -15 }}>
                   <Accordion>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography>Rent Structure</Typography>
+                      <Typography>Rental details</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>Yeh lo</Typography>
-                      <ul>
-                        <li>Yeh hai ki tum pehel se aaye ho </li>
-                      </ul>
+                      {/* <Typography>Verify Details</Typography> */}
+                      {/* ------------------------------------------- */}
+                      {/* <Typography>Rent :</Typography> */}
 
-                      <Typography>Yeh lo</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                          backgroundColor: "ghostwhite",
+                          boxShadow: "0px 2px 2px 0px #00000070",
+                          p: 2,
+                          borderRadius: 1,
+                          color: "gray",
+                          fontFamily: "popins",
+                        }}
+                      >
+                        <Typography>Date of joining</Typography>
+                        <Typography>
+                          {query?.data?.data?.registeredDate.split("T")[0]}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                          backgroundColor: "ghostwhite",
+                          boxShadow: "0px 2px 2px 0px #00000070",
+                          p: 2,
+                          borderRadius: 1,
+                          color: "gray",
+                          // zoom:"78%",
+                          fontSize: "10px",
+                          mt: 1,
+                        }}
+                      >
+                        <Typography>Left over days</Typography>
+                        <Typography>{dueRent.remainingDays}</Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                          backgroundColor: "ghostwhite",
+                          boxShadow: "0px 2px 2px 0px #00000070",
+                          p: 2,
+                          borderRadius: 1,
+                          color: "gray",
+                          // zoom:"78%",
+                          fontSize: "10px",
+                          mt: 1,
+                        }}
+                      >
+                        <Typography>Due payment</Typography>
+                        <Typography>{dueRent.remainingRent}</Typography>
+                      </Box>
+                      {/* -------------------------------------------- */}
                     </AccordionDetails>
                   </Accordion>
                 </div>

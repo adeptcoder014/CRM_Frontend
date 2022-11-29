@@ -25,9 +25,9 @@ import { useController } from "../controller/register";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "./loading";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { useRentController } from "../controller/rent";
+import { useRentController } from "../controller/rental";
 //===================================================
-export default function Register() {
+export default function Registration() {
   const [double, setDouble] = React.useState(false);
   const [tripple, setTripple] = React.useState(false);
   const { query, add, addForm } = useController();

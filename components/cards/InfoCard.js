@@ -5,6 +5,7 @@ export default function InfoCard(props) {
   const router = useRouter();
   return (
     <Grid
+    
       onClick={() => {
         router.push(props.url);
       }}
@@ -26,7 +27,7 @@ export default function InfoCard(props) {
       }}
     >
       <Badge badgeContent={4} color="primary">
-        <Box>
+        <Box >
           <Typography
             sx={{
               color: "gray",

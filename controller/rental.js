@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRent } from "../api/rent";
+import { getRent } from "../api/rental";
 //=======================================
 export const useRentController = () => {
   const rentQuery = useQuery({
