@@ -358,7 +358,7 @@ export default function Registration() {
                       borderRadius: 5,
                     }}
                   >
-                    ₹ {rentQuery ? rentQuery?.data?.data?.data[0].doubble : 000}
+                    ₹ {rentQuery?.data?.data?.data[0].doubble}
                   </span>
                 </Typography>
               ) : tripple ? (
@@ -375,7 +375,7 @@ export default function Registration() {
                       borderRadius: 5,
                     }}
                   >
-                    ₹ {rentQuery ? rentQuery?.data?.data?.data[0].tripple : 000}
+                    ₹ {rentQuery?.data?.data?.data[0].tripple}
                   </span>
                 </Typography>
               ) : null}
