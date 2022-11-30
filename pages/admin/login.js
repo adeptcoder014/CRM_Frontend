@@ -11,13 +11,13 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
 import EmailIcon from "@mui/icons-material/Email";
 import KeyIcon from "@mui/icons-material/Key";
-  //============================================
+//============================================
 export default function Login() {
   return (
     <>
       <Container
         maxWidth="xl"
-        sx={{ backgroundColor: "#ffede1" }}
+        sx={{ backgroundColor: "#ffede1", height: "500%",paddingBottom:19 }}
       >
         <Grid
           container
@@ -47,7 +47,12 @@ export default function Login() {
               mt: 5,
             }}
           >
-            <Typography variant="h5">OFS Admin Center</Typography>
+            <Typography
+              variant="h5"
+              sx={{ color: "black", fontWeight: "bolder" }}
+            >
+              OFS Admin Center
+            </Typography>
             <FormLabel sx={{ mb: -4 }}>Email</FormLabel>
             <TextField
               // error={addForm.touched.name && Boolean(addForm.errors.name)}
@@ -109,9 +114,12 @@ export default function Login() {
                   fontSize: 13,
                   fontWeight: 600,
                   cursor: "pointer",
+                  color: "black",
+                  mt: 2,
+                  // mr:1
                 }}
               >
-                Forgot Password ?
+                Forgot Password
               </Typography>
 
               <LoadingButton
@@ -178,13 +186,17 @@ export default function Login() {
             }}
           >
             <Image src={"/logo.png"} height={150} width={150} />
-            <Typography variant="h5" sx={{ mt: 5 }}>
+            <Typography
+              variant="h5"
+              sx={{ mt: 5, color: "black", fontWeight: "bolder" }}
+            >
               One Fine Stay
             </Typography>
             <Typography
               sx={{
                 mt: 5,
                 fontFamily: "poppins",
+                color: "black",
               }}
             >
               One Fine Stay is the most advance CRM system which employs
@@ -197,10 +209,10 @@ export default function Login() {
                   // border: "1px solid #ff9625",
                   fontWeight: 500,
                   backgroundColor: "#ffddc7",
-                  width: "35%",
+                  // width: "45%",
                   textAlign: "center",
                   borderRadius: 1,
-                  p: 0.8,
+                  p: 1,
                   mt: 5,
                 }}
               >
@@ -212,10 +224,10 @@ export default function Login() {
                   // border: "1px solid #ff9625",
                   fontWeight: 500,
                   backgroundColor: "#ffddc7",
-                  width: "35%",
+                  // width: "45%",
                   textAlign: "center",
                   borderRadius: 1,
-                  p: 0.8,
+                  p: 1,
                   mt: 5,
                 }}
               >
