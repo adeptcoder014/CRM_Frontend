@@ -6,18 +6,31 @@ import {
   FormLabel,
   InputAdornment,
   Grid,
+  IconButton,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
 import EmailIcon from "@mui/icons-material/Email";
 import KeyIcon from "@mui/icons-material/Key";
+import { useController } from "../../controller/adminLogin";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
 //============================================
 export default function Login() {
+  const { add, addForm } = useController();
+  const [showPassword, setShowPassword] = useState(false);
+  //=====================================================
   return (
     <>
       <Container
         maxWidth="xl"
-        sx={{ backgroundColor: "#ffede1", height: "500%",paddingBottom:19 }}
+        sx={{
+          backgroundColor: "#ffede1",
+          height: "500%",
+          paddingBottom: 19,
+          boxSizing: "content-box",
+        }}
       >
         <Grid
           container
@@ -53,98 +66,207 @@ export default function Login() {
             >
               OFS Admin Center
             </Typography>
-            <FormLabel sx={{ mb: -4 }}>Email</FormLabel>
-            <TextField
-              // error={addForm.touched.name && Boolean(addForm.errors.name)}
-              // helperText={addForm.touched.name && addForm.errors.name}
-              id="name"
-              name="name"
-              // value={addForm.values.name}
-              // onChange={addForm.handleChange}
-              sx={{
-                width: "90%",
-                backgroundColor: "#f6f8fb",
-                color: "white",
-              }}
-              size="small"
-              // variant="standard"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />{" "}
-            <FormLabel sx={{ mb: -4 }}>Password</FormLabel>
-            <TextField
-              // error={addForm.touched.name && Boolean(addForm.errors.name)}
-              // helperText={addForm.touched.name && addForm.errors.name}
-              id="name"
-              name="name"
-              // value={addForm.values.name}
-              // onChange={addForm.handleChange}
-              sx={{
-                backgroundColor: "#f6f8fb",
-
-                width: "90%",
-                "& label.Mui-focused": {
-                  color: "red",
-                },
-              }}
-              size="small"
-              // variant="standard"
-              InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <KeyIcon />
-                    </InputAdornment>
-                    {/* <InputAdornment position="end">
-                      <VisibilityIcon />
-                    </InputAdornment> */}
-                  </>
-                ),
-              }}
-            />{" "}
-            <Box sx={{ display: "flex" }}>
-              <Typography
+            {/* ================================================== */}
+            {/* <form onSubmit={addForm.handleSubmit}> 
+              <FormLabel sx={{ mb:1 }}>Email</FormLabel>
+              <TextField
+                id="name"
+                name="name"
                 sx={{
-                  fontFamily: "poppins",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  color: "black",
-                  mt: 2,
-                  // mr:1
-                }}
-              >
-                Forgot Password
-              </Typography>
-
-              <LoadingButton
-                // disabled={add.isLoading}
-                // loading={add.isLoading}
-                type="submit"
-                sx={{
-                  backgroundColor: "#f76334",
+                  width: "90%",
+                  backgroundColor: "#f6f8fb",
                   color: "white",
-                  width: "50%",
-                  fontSize: 16,
-                  m: "auto",
-                  // mt: 1,
-                  borderRadius: "100px",
+                }}
+                size="small"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />{" "}
+              <FormLabel sx={{ mb: -4 }}>Password</FormLabel>
+              <TextField
+                id="name"
+                name="name"
+                sx={{
+                  backgroundColor: "#f6f8fb",
 
-                  "&:hover": {
+                  width: "90%",
+                  "& label.Mui-focused": {
                     color: "red",
-                    border: "1px solid #ff7f56",
-                    backgroundColor: "white",
                   },
                 }}
-              >
-                Login
-              </LoadingButton>
-            </Box>
+                size="small"
+                InputProps={{
+                  startAdornment: (
+                    <>
+                      <InputAdornment position="start">
+                        <KeyIcon />
+                      </InputAdornment>
+                    
+                    </>
+                  ),
+                }}
+              />{" "}
+              <Box sx={{ display: "flex" }}>
+                <Typography
+                  sx={{
+                    fontFamily: "poppins",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    color: "black",
+                    mt: 2,
+                  }}
+                >
+                  Forgot Password
+                </Typography>
+
+                <LoadingButton
+                 
+                  type="submit"
+                  sx={{
+                    backgroundColor: "#f76334",
+                    color: "white",
+                    width: "50%",
+                    fontSize: 16,
+                    m: "auto",
+                    borderRadius: "100px",
+                    "&:hover": {
+                      color: "red",
+                      border: "1px solid #ff7f56",
+                      backgroundColor: "white",
+                    },
+                  }}
+                >
+                  Login
+                </LoadingButton>
+              </Box>
+            </form> */}
+
+            <form onSubmit={addForm.handleSubmit}>
+              <Box>
+                {" "}
+                <Grid
+                  container
+                  // sx={{ width: "100%", mt: 5, display: "flex", p: 0 }}
+                >
+                  <Grid
+                    className="responsive"
+                    item
+                    md={12}
+                    xs={12}
+                    sx={{ display: "flex", flexDirection: "column", mt: 5 }}
+                  >
+                    {/* =====================================================================00 */}
+                    <FormLabel sx={{ mb: 2 }}>Email</FormLabel>
+                    <TextField
+                      error={
+                        addForm.touched.email && Boolean(addForm.errors.email)
+                      }
+                      helperText={addForm.touched.email && addForm.errors.email}
+                      id="email"
+                      name="email"
+                      value={addForm.values.email}
+                      onChange={addForm.handleChange}
+                      sx={{
+                        width: "90%",
+                        backgroundColor: "#f6f8fb",
+                        color: "white",
+                      }}
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />{" "}
+                   
+                    <FormLabel sx={{ mb: 2, mt: 2 }}>Password</FormLabel>
+                    <TextField
+                      error={
+                        addForm.touched.password &&
+                        Boolean(addForm.errors.password)
+                      }
+                      helperText={
+                        addForm.touched.password && addForm.errors.password
+                      }
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+
+                      value={addForm.values.password}
+                      onChange={addForm.handleChange}
+                      sx={{
+                        backgroundColor: "#f6f8fb",
+
+                        width: "90%",
+                        "& label.Mui-focused": {
+                          color: "red",
+                        },
+                      }}
+                      size="small"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              // onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? (
+                                <VisibilityIcon />
+                              ) : (
+                                <VisibilityOffIcon />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                        startAdornment: (
+                          <>
+                            <InputAdornment position="start">
+                              <KeyIcon />
+                            </InputAdornment>
+                          </>
+                        ),
+                      }}
+                    />{" "}
+                    {/* ========================================================================>> */}
+                  </Grid>
+
+                  
+                </Grid>
+                <LoadingButton
+                  disabled={add.isLoading}
+                  loading={add.isLoading}
+                  type="submit"
+                  sx={{
+                    backgroundColor: "#f76334",
+                    color: "white",
+                    width: "100%",
+                    fontSize: 16,
+                    m: "auto",
+
+                    mt: 5,
+                    borderRadius: "100px",
+                    p: 2,
+                    "&:hover": {
+                      color: "red",
+                      border: "1px solid #ff7f56",
+                      backgroundColor: "white",
+                    },
+                  }}
+                >
+                  Register a user
+                </LoadingButton>
+              </Box>
+            </form>
+
+            {/* ======================================================= */}
             {/* <LoadingButton
               // disabled={add.isLoading}
               // loading={add.isLoading}
@@ -206,10 +328,8 @@ export default function Login() {
               <Box
                 sx={{
                   color: "#ff9625",
-                  // border: "1px solid #ff9625",
                   fontWeight: 500,
                   backgroundColor: "#ffddc7",
-                  // width: "45%",
                   textAlign: "center",
                   borderRadius: 1,
                   p: 1,
@@ -221,10 +341,8 @@ export default function Login() {
               <Box
                 sx={{
                   color: "#ff9625",
-                  // border: "1px solid #ff9625",
                   fontWeight: 500,
                   backgroundColor: "#ffddc7",
-                  // width: "45%",
                   textAlign: "center",
                   borderRadius: 1,
                   p: 1,

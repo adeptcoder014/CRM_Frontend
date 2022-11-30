@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { register } from "../api/auth/register";
+import { register } from "../api/auth/userRegistration";
 import { getUsers } from "../api/user";
-import { registrationValidation } from "../validation/register";
+import { registrationValidation } from "../validation/userRegistration";
 import { useFormik } from "formik";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";

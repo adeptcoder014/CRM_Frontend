@@ -1,495 +1,303 @@
-import DashboardLayout from "../../components/layout/dashboard-layout";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import { getUserById } from "../../api/user";
 import {
-  Container,
   Box,
-  Grid,
-  Typography,
+  Container,
   TextField,
+  Typography,
   FormLabel,
   InputAdornment,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  Grid,
+  FormControl,
+  IconButton,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Loading from "../../components/loading";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import BedroomChildIcon from "@mui/icons-material/BedroomChild";
-import BedroomParentIcon from "@mui/icons-material/BedroomParent";
-import LuggageIcon from "@mui/icons-material/Luggage";
-import ElectricMeterIcon from "@mui/icons-material/ElectricMeter";
-import DiscountIcon from "@mui/icons-material/Discount";
-import GppMaybeIcon from "@mui/icons-material/GppMaybe";
-import CommentIcon from "@mui/icons-material/Comment";
-import { useFormik } from "formik";
-import { approvalValidation } from "../../validation/approval";
-import { approval } from "../../api/approval";
-import { Query, useMutation } from "@tanstack/react-query";
-import Swal from "sweetalert2";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useRentController } from "../../controller/rental";
-//============================================================================
-export default function RegisterUser() {
-  const { rentQuery } = useRentController();
+import Image from "next/image";
+import EmailIcon from "@mui/icons-material/Email";
+import KeyIcon from "@mui/icons-material/Key";
+import { useController } from "../../controller/adminRegistration";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
 
-  const router = useRouter();
-  const query = useQuery({
-    queryKey: ["userById", router.query.id],
-    queryFn: () => getUserById(router.query.id),
-    onSuccess: (res) =>
-      // console.log("res---",res.data),
-      patchForm.setValues(res.data),
-    enabled: !!router.query.id,
-  });
-
-  const patchForm = useFormik({
-    initialValues: {
-      room: 0,
-      meterReading: 0,
-      discount: 0,
-      security: 0,
-      remark: "",
-    },
-    validationSchema: approvalValidation,
-    onSubmit: (values) => {
-      console.log("values---", values);
-
-      patch.mutate({ data: values, id: router.query.id });
-    },
-  });
-  //------------------- ADD -------------------------------------
-
-  const patch = useMutation({
-    mutationFn: approval,
-    onSuccess: (res) =>
-      Swal.fire("Registration Done ", "User is registered ", "success").then(
-        () => router.push("/admin/home")
-      ),
-    onError: (err) => Swal.fire("Error !", err.response.data, "error"),
-  });
-
-  //==================================
-  if (query.isLoading) {
-    return <Loading />;
-  }
-  if (rentQuery.isLoading) {
-    return <Loading />;
-  }
-  //============ RENTAL_STRUCTURE ================================
-  const giveRemainingRent = (days) => {
-    const remainingDays = 30 - days;
-    const remainingRent =
-      remainingDays * rentQuery.data.data.data[0].rentPerDay;
-    return { remainingDays, remainingRent };
-  };
-  //============================================
-  const dueRent = giveRemainingRent(
-    query?.data?.data?.registeredDate.split("T")[0].split("-")[2]
-  );
-  //=====================================================
+//============================================
+export default function Register() {
+  const { add, addForm } = useController();
+  const [showPassword, setShowPassword] = useState(false)
+  //=============================================
   return (
     <>
       <Container
-        maxWidth="md"
+        maxWidth="xl"
         sx={{
-          mt: 5,
-          backgroundColor: "#f5f5f5",
-          boxShadow: "0px 3px 3px 0px #b1cdb1",
-          borderRadius: "6px",
-          p: 5,
+          backgroundColor: "#ffede1",
+          height: "500%",
+          paddingBottom: 19,
+          boxSizing: "content-box",
         }}
       >
-        <Grid container>
-          <Grid item xl={1} lg={1} md={4} xs={12} sx={{ mr: 0 }}>
-            <AccountCircleIcon sx={{ fontSize: "85px", color: "gray" }} />
-          </Grid>
-          <Grid item xl={6} lg={6} md={4} xs={12} sx={{}}>
-            <Typography
-              sx={{
-                color: "gray",
-                fontWeight: 600,
-                fontFamily: "poppins",
-                ml: 1,
-              }}
-            >
-              {query?.data?.data?.name}
-            </Typography>
-            <Typography
-              sx={{
-                color: "gray",
-                fontWeight: "bolder",
-                fontFamily: "poppins",
-                ml: 1,
-              }}
-            >
-              {query?.data?.data?.email}
-            </Typography>
-            <Typography
-              sx={{
-                color: "gray",
-                fontWeight: "bolder",
-                fontFamily: "poppins",
-                ml: 1,
-              }}
-            >
-              {query?.data?.data?.phone}
-            </Typography>
-          </Grid>
-          <Grid item xl={5} lg={5} md={4} xs={12}>
-            {/* ========  Conditional Rendering ========================= */}
-
-            {query.data.data.roomPreference === "double" ? (
-              <BedroomParentIcon
-                sx={{
-                  backgroundColor: "gray",
-                  color: "white",
-                  borderRadius: "3px",
-                  fontSize: 45,
-                }}
-              />
-            ) : (
-              <>
-                <BedroomParentIcon
-                  sx={{
-                    backgroundColor: "gray",
-                    color: "white",
-                    borderRadius: "3px",
-                    fontSize: 45,
-                  }}
-                />
-                <BedroomChildIcon
-                  sx={{
-                    backgroundColor: "gray",
-                    color: "white",
-                    borderRadius: "3px",
-                    fontSize: 45,
-                  }}
-                />
-              </>
-            )}
-
-            <Typography
-              sx={{
-                color: "gray",
-                fontWeight: "bolder",
-                fontFamily: "poppins",
-              }}
-            >
-              {query?.data?.data?.zodiac?.symbol}{" "}
-              {query?.data?.data?.zodiac?.name}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Container>
-
-      {/* ===================== FORM ================================== */}
-
-      <Container
-        maxWidth="lg"
-        sx={{
-          mt: 5,
-          //   backgroundColor: "#f5f5f5",
-          boxShadow: "0px 3px 3px 0px #b1cdb1",
-          borderRadius: "6px",
-          p: 5,
-        }}
-      >
-        <form onSubmit={patchForm.handleSubmit}>
-          <Box
+        <Grid
+          container
+          maxWidth="md"
+          sx={{
+            m: "auto",
+            // backgroundColor:"gray",
+            // mt: 5,
+            display: "flex",
+          }}
+        >
+          <Grid
+            item
+            xl={6}
+            lg={6}
+            md={6}
+            sm={12}
+            xs={12}
             sx={{
+              // minWidth: "50%",
+              boxShadow: "0px 6px 8px 0px #f3c7ab",
               backgroundColor: "white",
-              boxShadow: "0px -4px 4px 0px #b1a1a1",
-              display: "flex",
               p: 5,
+              display: "flex",
               flexDirection: "column",
+              gap: 5,
+              mt: 5,
             }}
           >
-            {" "}
-            <Typography variant="h4" sx={{ fontFamily: "poppins", mb: 5 }}>
-              Assign User Information
-            </Typography>
-            <Grid
-              container
-              sx={{ width: "100%", mt: 5, display: "flex", p: 0 }}
+            <Typography
+              variant="h5"
+              sx={{ color: "black", fontWeight: "bolder" }}
             >
-              <Grid
-                className="responsive"
-                item
-                md={6}
-                xs={12}
-                sx={{ display: "flex", flexDirection: "column", mb: 5 }}
-              >
-                <FormLabel sx={{ mb: 2 }}>Room Number</FormLabel>
-                <TextField
-                  error={
-                    patchForm.touched.room && Boolean(patchForm.errors.room)
-                  }
-                  helperText={patchForm.touched.room && patchForm.errors.room}
-                  id="room"
-                  type="number"
-                  name="room"
-                  value={patchForm?.values?.room}
-                  onChange={patchForm.handleChange}
+              OFS Admin Center
+            </Typography>
+            {/* ==================FORM ================================ */}
+
+            <form onSubmit={addForm.handleSubmit}>
+              <Box>
+                {" "}
+                <Grid
+                  container
+                  // sx={{ width: "100%", mt: 5, display: "flex", p: 0 }}
+                >
+                  <Grid
+                    className="responsive"
+                    item
+                    md={12}
+                    xs={12}
+                    sx={{ display: "flex", flexDirection: "column", mt: 5 }}
+                  >
+                    {/* =====================================================================00 */}
+                    <FormLabel sx={{ mb: 2 }}>Name</FormLabel>
+                    <TextField
+                      error={
+                        addForm.touched.name && Boolean(addForm.errors.name)
+                      }
+                      helperText={addForm.touched.name && addForm.errors.name}
+                      id="name"
+                      name="name"
+                      value={addForm.values.name}
+                      onChange={addForm.handleChange}
+                      sx={{
+                        width: "90%",
+                        backgroundColor: "#f6f8fb",
+                        color: "white",
+                      }}
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />{" "}
+                    <FormLabel sx={{ mb: 2, mt: 2 }}>Email</FormLabel>
+                    <TextField
+                      error={
+                        addForm.touched.email && Boolean(addForm.errors.email)
+                      }
+                      helperText={addForm.touched.email && addForm.errors.email}
+                      id="email"
+                      name="email"
+                      value={addForm.values.email}
+                      onChange={addForm.handleChange}
+                      sx={{
+                        backgroundColor: "#f6f8fb",
+
+                        width: "90%",
+                        "& label.Mui-focused": {
+                          color: "red",
+                        },
+                      }}
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton
+                            //   aria-label="toggle password visibility"
+                            //   onClick={() => setShowPassword(prev => !prev)}
+                            // // onMouseDown={handleMouseDownPassword}
+                            >
+                              {/* {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />} */}
+                              <KeyIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />{" "}
+                    <FormLabel sx={{ mb: 2, mt: 2 }}>Password</FormLabel>
+                    <TextField
+                      error={
+                        addForm.touched.password &&
+                        Boolean(addForm.errors.password)
+                      }
+                      helperText={
+                        addForm.touched.password && addForm.errors.password
+                      }
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={addForm.values.password}
+                      onChange={addForm.handleChange}
+                      sx={{
+                        backgroundColor: "#f6f8fb",
+
+                        width: "90%",
+                        "& label.Mui-focused": {
+                          color: "red",
+                        },
+                      }}
+                      size="small"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                              // onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? (
+                                <VisibilityIcon />
+                              ) : (
+                                <VisibilityOffIcon />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                        startAdornment: (
+                          <>
+                            <InputAdornment position="start">
+                              <KeyIcon />
+                            </InputAdornment>
+                          </>
+                        ),
+                      }}
+                    />{" "}
+                    {/* ========================================================================>> */}
+                  </Grid>
+
+                  <Grid
+                    className="responsive"
+                    item
+                    md={6}
+                    xs={12}
+                    sx={{ display: "flex", flexDirection: "column", mt: 6 }}
+                  >
+                    {/* ============= Conditional Rendering ====================== */}
+
+                    {/* //=========================================================== */}
+                  </Grid>
+                </Grid>
+                <LoadingButton
+                  disabled={add.isLoading}
+                  loading={add.isLoading}
+                  type="submit"
                   sx={{
-                    width: "90%",
-                    "& label.Mui-focused": {
+                    backgroundColor: "#f76334",
+                    color: "white",
+                    width: "100%",
+                    fontSize: 16,
+                    m: "auto",
+
+                    // mt: 5,
+                    borderRadius: "100px",
+                    p: 2,
+                    "&:hover": {
                       color: "red",
+                      border: "1px solid #ff7f56",
+                      backgroundColor: "white",
                     },
                   }}
-                  size="small"
-                  variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LuggageIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid
-                className="responsive"
-                item
-                md={6}
-                xs={12}
-                sx={{ display: "flex", flexDirection: "column" }}
-              >
-                <FormLabel sx={{ mb: 2 }}>Electricity Meter Reading </FormLabel>
-                <TextField
-                  error={
-                    patchForm.touched.meterReading &&
-                    Boolean(patchForm.errors.meterReading)
-                  }
-                  helperText={
-                    patchForm.touched.meterReading &&
-                    patchForm.errors.meterReading
-                  }
-                  id="meterReading"
-                  name="meterReading"
-                  type="number"
-                  value={patchForm?.values?.meterReading}
-                  onChange={patchForm.handleChange}
-                  sx={{ width: "90%" }}
-                  size="small"
-                  variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <ElectricMeterIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+                >
+                  Register a user
+                </LoadingButton>
+              </Box>
+            </form>
+          </Grid>
+          <Grid
+            item
+            xl={6}
+            lg={6}
+            md={6}
+            sm={12}
+            xs={12}
+            sx={{
+              // minWidth: "50%",
+              backgroundColor: "#ffede1",
+              boxShadow: "0px 6px 8px 0px #f3c7ab",
 
-              <Grid
-                className="responsive"
-                item
-                md={6}
-                xs={12}
-                sx={{ display: "flex", flexDirection: "column", mt: 5 }}
-              >
-                <FormLabel sx={{ mb: 2 }}>Rent Structure</FormLabel>
-
-                {/* <TextField
-                  error={
-                    patchForm.touched.discount &&
-                    Boolean(patchForm.errors.discount)
-                  }
-                  helperText={
-                    patchForm.touched.discount && patchForm.errors.discount
-                  }
-                  id="discount"
-                  name="discount"
-                  type="number"
-                  value={patchForm?.values?.discount}
-                  onChange={patchForm.handleChange}
-                  sx={{ width: "90%" }}
-                  size="small"
-                  variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <DiscountIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
-                <div style={{ width: "90%", marginTop: -15 }}>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography>Rental details</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {/* <Typography>Verify Details</Typography> */}
-                      {/* ------------------------------------------- */}
-                      {/* <Typography>Rent :</Typography> */}
-
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          fontFamily: "popins",
-                        }}
-                      >
-                        <Typography>Date of joining</Typography>
-                        <Typography>
-                          {query?.data?.data?.registeredDate.split("T")[0]}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          // zoom:"78%",
-                          fontSize: "10px",
-                          mt: 1,
-                        }}
-                      >
-                        <Typography>Left over days</Typography>
-                        <Typography>{dueRent.remainingDays}</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          // zoom:"78%",
-                          fontSize: "10px",
-                          mt: 1,
-                        }}
-                      >
-                        <Typography>Due payment</Typography>
-                        <Typography>{dueRent.remainingRent}</Typography>
-                      </Box>
-                      {/* -------------------------------------------- */}
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-              </Grid>
-              <Grid
-                className="responsive"
-                item
-                md={6}
-                xs={12}
-                sx={{ display: "flex", flexDirection: "column", mt: 5 }}
-              >
-                <FormLabel sx={{ mb: 2 }}>security</FormLabel>
-
-                <TextField
-                  error={
-                    patchForm.touched.discount &&
-                    Boolean(patchForm.errors.security)
-                  }
-                  helperText={
-                    patchForm.touched.security && patchForm.errors.security
-                  }
-                  id="security"
-                  name="security"
-                  type="number"
-                  defaultValue={
-                    query.data.data.roomPreference == "double"
-                      ? rentQuery?.data?.data?.data[0].doubble
-                      : rentQuery?.data?.data?.data[0].tripple
-                  }
-                  onChange={patchForm.handleChange}
-                  sx={{ width: "90%" }}
-                  size="small"
-                  variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <GppMaybeIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid
-                className="responsive"
-                item
-                md={6}
-                xs={12}
-                sx={{ display: "flex", flexDirection: "column", mt: 6 }}
-              >
-                <FormLabel sx={{ mb: 2 }}>Remark</FormLabel>
-
-                <TextField
-                  multiline
-                  error={
-                    patchForm.touched.remark && Boolean(patchForm.errors.remark)
-                  }
-                  helperText={
-                    patchForm.touched.remark && patchForm.errors.remark
-                  }
-                  id="remark"
-                  name="remark"
-                  value={patchForm?.values?.remark}
-                  onChange={patchForm.handleChange}
-                  sx={{ width: "90%" }}
-                  size="small"
-                  variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <CommentIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <LoadingButton
-              fullWidth
-              // onClick={() => console.log("xxx----->", router.query.id)}
-              disabled={patch.isLoading}
-              loading={patch.isLoading}
-              type="submit"
+              p: 5,
+              display: "flex",
+              flexDirection: "column",
+              mt: 5,
+            }}
+          >
+            <Image src={"/logo.png"} height={150} width={150} />
+            <Typography
+              variant="h5"
+              sx={{ mt: 5, color: "black", fontWeight: "bolder" }}
+            >
+              One Fine Stay
+            </Typography>
+            <Typography
               sx={{
-                backgroundColor: "#ff855f",
-                color: "white",
-                // width: "50%",
-                fontSize: 16,
-                m: "auto",
                 mt: 5,
-                borderRadius: "100px",
-                p: 2,
-                "&:hover": {
-                  color: "#ff855f",
-                  fontWeight: "bolder",
-                  border: "2px solid #ff855f",
-                  backgroundColor: "white",
-                },
+                fontFamily: "poppins",
+                color: "black",
               }}
             >
-              Register a user
-            </LoadingButton>
-          </Box>
-        </form>
+              One Fine Stay is the most advance CRM system which employs
+              Blockchain and run on the OFS-coin
+            </Typography>
+            <Box sx={{ display: "flex", gap: 2, width: "100%" }}>
+              <Box
+                sx={{
+                  color: "#ff9625",
+                  fontWeight: 500,
+                  backgroundColor: "#ffddc7",
+                  textAlign: "center",
+                  borderRadius: 1,
+                  p: 1,
+                  mt: 5,
+                }}
+              >
+                Blockchain
+              </Box>{" "}
+              <Box
+                sx={{
+                  color: "#ff9625",
+                  fontWeight: 500,
+                  backgroundColor: "#ffddc7",
+                  textAlign: "center",
+                  borderRadius: 1,
+                  p: 1,
+                  mt: 5,
+                }}
+              >
+                OFS Token
+              </Box>
+            </Box>
+          </Grid>{" "}
+        </Grid>
       </Container>
     </>
   );
 }
-
-RegisterUser.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

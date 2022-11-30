@@ -70,7 +70,7 @@ export default function Home(props) {
           variant="outlined"
             onClick={() => {
               // console.log("------>",params.id)
-              router.push(`/admin/register/?id=${params.id}`);
+              router.push(`/admin/register-user/?id=${params.id}`);
             }}
         >
           Register

@@ -21,7 +21,7 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { getUsers } from "../api/user";
-import { useController } from "../controller/register";
+import { useController } from "../controller/userRegistration";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loading from "./loading";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
