@@ -137,7 +137,7 @@ export default function Login() {
                 Login
               </LoadingButton>
             </Box>
-            <LoadingButton
+            {/* <LoadingButton
               // disabled={add.isLoading}
               // loading={add.isLoading}
               type="submit"
@@ -154,7 +154,7 @@ export default function Login() {
               }}
             >
               Sign up
-            </LoadingButton>{" "}
+            </LoadingButton>{" "} */}
             {/* <Typography sx={{ ml: 250, mt: -30, mb: -30 }}>
               Or
             </Typography> */}
