@@ -7,6 +7,7 @@ import {
   InputAdornment,
   Grid,
   IconButton,
+  Button,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
@@ -16,10 +17,20 @@ import { useController } from "../../controller/adminLogin";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { SignpostOutlined } from "@mui/icons-material";
+import { signIn } from "next-auth/react";
 //============================================
 export default function Login() {
   const { add, addForm } = useController();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("Token");
+    if (token) {
+      router.push("/admin/home");
+    }
+  }
   //=====================================================
   return (
     <>
@@ -185,7 +196,6 @@ export default function Login() {
                         ),
                       }}
                     />{" "}
-                   
                     <FormLabel sx={{ mb: 2, mt: 2 }}>Password</FormLabel>
                     <TextField
                       error={
@@ -198,7 +208,6 @@ export default function Login() {
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
-
                       value={addForm.values.password}
                       onChange={addForm.handleChange}
                       sx={{
@@ -237,8 +246,6 @@ export default function Login() {
                     />{" "}
                     {/* ========================================================================>> */}
                   </Grid>
-
-                  
                 </Grid>
                 <LoadingButton
                   disabled={add.isLoading}
@@ -263,6 +270,7 @@ export default function Login() {
                 >
                   Register a user
                 </LoadingButton>
+                
               </Box>
             </form>
 

@@ -16,7 +16,7 @@ export const useController = () => {
     },
     validationSchema: adminLoginValidation,
     onSubmit: (values) => {
-      add.mutate(values).then((res) => console.log("NEW RES --->", res));
+      add.mutate(values);
     },
   });
 
@@ -24,12 +24,12 @@ export const useController = () => {
   const add = useMutation({
     mutationFn: login,
     onSuccess: (res) => {
-      console.log("NEW RES --->", res.data.token);
       localStorage.setItem('Token', res.data.token);
+      res
 
       return Swal.fire(
         "Logged in !",
-        "Continue with the Admin approval",
+        "Continue with the OFS Admin Panel",
         "success"
       ).then(() => router.push("/admin/home"));
     },

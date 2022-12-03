@@ -13,12 +13,22 @@ import { useRouter } from "next/router";
 import { deleteUser } from "../../api/user";
 import Swal from "sweetalert2" ;
 import InfoCard from "../../components/cards/InfoCard";
+import {TokenProvider} from "../../context/localStorageToken"
 //==========================================================
 export default function Home(props) {
   const router = useRouter();
   const { sidebarOpen, setSidebarOpen } = useSidebarOpen();
   const theme = useTheme();
   const { query } = useController({ filter: "NEW" });
+
+
+  if(typeof window !== 'undefined'){
+
+    const token = localStorage.getItem("Token")
+    if(!token){
+      router.push("/admin/login")
+    }
+  }
 
   if (query.isLoading) {
     return <Loading />;

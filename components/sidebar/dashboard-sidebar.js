@@ -200,14 +200,18 @@ export default function DashboardSidebar(props) {
                     fontSize: 12,
                     fontWeight: "bold",
                     color: darkMode
-                    ? theme.custom.primary.contrastText
-                    : theme.custom.primary.contrastText,                  }}
+                      ? theme.custom.primary.contrastText
+                      : theme.custom.primary.contrastText,
+                  }}
                 >
                   Arise Enterprise ©️
                 </Typography>
               </Box>
             </Box>
-            <IconButton onClick={onClose} sx={{color:"white",border:"1px solid white"}}>
+            <IconButton
+              onClick={onClose}
+              sx={{ color: "white", border: "1px solid white" }}
+            >
               <ChevronLeftIcon />
             </IconButton>
           </DrawerHeader>
@@ -317,13 +321,16 @@ export default function DashboardSidebar(props) {
             </Box> */}
           </Box>
           <Box
-            onClick={() =>
+            onClick={() => {
+              // if (typeof window !== "undefined") {
+              // }
+              localStorage.clear();
               Swal.fire(
                 "You have been logged out!",
                 "Log in to continue",
                 "success"
-              )
-            }
+              );
+            }}
             sx={{
               // zoom: '90%',
               // background: 'linear-gradient(45deg, #ff4b4b, #ffb5b5)',
