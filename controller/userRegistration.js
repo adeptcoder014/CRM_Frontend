@@ -35,11 +35,12 @@ export const useController = () => {
   const add = useMutation({
     mutationFn: register,
     onSuccess: (res) => {
+      console.log("Yeh aaya re ---__>", res.data.user._id)
       return Swal.fire(
         "Registration Done ",
         "Wait for the Admin approval",
         "success"
-      ).then(() => router.push("/user/home"));
+      ).then(() => router.push(`/user/home/?id=${res.data.user._id}`));
     },
     onError: (err) =>
       Swal.fire(

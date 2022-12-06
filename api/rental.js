@@ -1,7 +1,6 @@
-import axios from "axios"
-import { ADMIN_URL } from "../constants/url"
+import axiosInstance from "../api/axios";
 //========================================
 
 export const getRent = ()=>{
-    return axios.get(`${ADMIN_URL}/rent`)
+    return axiosInstance.get(`/rent`)
 }

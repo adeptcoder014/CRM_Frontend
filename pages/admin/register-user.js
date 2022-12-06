@@ -31,16 +31,16 @@ import { Query, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRentController } from "../../controller/rental";
+import { useState } from "react";
+import { ADMIN_URL } from "../../constants/url";
 //============================================================================
 export default function RegisterUser() {
   const { rentQuery } = useRentController();
-
   const router = useRouter();
   const query = useQuery({
     queryKey: ["userById", router.query.id],
     queryFn: () => getUserById(router.query.id),
-    onSuccess: (res) =>
-      patchForm.setValues(res.data),
+    onSuccess: (res) => patchForm.setValues(res.data),
     enabled: !!router.query.id,
   });
 
@@ -89,8 +89,16 @@ export default function RegisterUser() {
     query?.data?.data?.registeredDate.split("T")[0].split("-")[2]
   );
   //=====================================================
+  // const img = new Buffer.from(query?.data?.data?.photo.data.data).toString("base64");
+  // const base64String = new Buffer(query?.data?.data?.photo?.data?.data).toString('base64')
+
+  // console.log("base64String ---", base64String);
+
+  //============================
   return (
     <>
+  
+
       <Container
         maxWidth="md"
         sx={{
@@ -101,11 +109,24 @@ export default function RegisterUser() {
           p: 5,
         }}
       >
-        <Grid container>
-          <Grid item xl={1} lg={1} md={4} xs={12} sx={{ mr: 0 }}>
-            <AccountCircleIcon sx={{ fontSize: "85px", color: "gray" }} />
-          </Grid>
-          <Grid item xl={6} lg={6} md={4} xs={12} sx={{}}>
+        <Box container sx={{ display: "flex", flexWrap: "wrap", width: "80%" }}>
+          <Box
+            item
+            xl={1}
+            lg={1}
+            md={4}
+            xs={12}
+            sx={{ mr: 0, flexBasis: "150px" }}
+          >
+            <img
+              // src={`data:image/jpeg;base64,${base64String}`}
+              // alt="helloWorld"
+              // src={`http://localhost:5000/${query?.data?.data?.photo}`}
+              src={`${ADMIN_URL}/${query?.data?.data?.photo}`}
+              style={{border:"1px dashed gray"}}
+            />{" "}
+          </Box>
+          <Box item xl={6} lg={6} md={4} xs={12} sx={{ flexBasis: "350px" }}>
             <Typography
               sx={{
                 color: "gray",
@@ -136,11 +157,11 @@ export default function RegisterUser() {
             >
               {query?.data?.data?.phone}
             </Typography>
-          </Grid>
-          <Grid item xl={5} lg={5} md={4} xs={12}>
+          </Box>
+          <Box item xl={5} lg={5} md={4} xs={12} sx={{ flexBasis: "150px" }}>
             {/* ========  Conditional Rendering ========================= */}
 
-            {query.data.data.roomPreference === "double" ? (
+            {query?.data?.data?.roomPreference === "double" ? (
               <BedroomParentIcon
                 sx={{
                   backgroundColor: "gray",
@@ -180,8 +201,8 @@ export default function RegisterUser() {
               {query?.data?.data?.zodiac?.symbol}{" "}
               {query?.data?.data?.zodiac?.name}
             </Typography>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Container>
 
       {/* ===================== FORM ================================== */}
@@ -408,7 +429,7 @@ export default function RegisterUser() {
                   name="security"
                   type="number"
                   defaultValue={
-                    query.data.data.roomPreference == "double"
+                    query?.data?.data?.roomPreference == "double"
                       ? rentQuery?.data?.data?.data[0].doubble
                       : rentQuery?.data?.data?.data[0].tripple
                   }
