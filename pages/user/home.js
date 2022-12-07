@@ -1,185 +1,217 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import {
+  Grid,
+  Typography,
+  Box,
+  Container,
+  Avatar,
+  Divider,
+} from "@mui/material";
+import DashboardLayout from "../../components/layout/user-layout";
+import BedIcon from "@mui/icons-material/Bed";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "../../api/user";
+import Loading from "../../components/loading";
+import OutletIcon from "@mui/icons-material/Outlet";
+//===========================================================
+function getWindowDimensions() {
+  if (typeof window !== "undefined") {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  }
+}
+//--------------------------------------------------------
+export default function Home() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
-const drawerWidth = 240;
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  //---------------------------------------------------
+  const router = useRouter();
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight: -drawerWidth,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginRight: 0,
-    }),
-  })
-);
+  const query = useQuery({
+    queryKey: ["userById", router.query.id],
+    queryFn: () => getUserById(router.query.id),
+    enabled: !!router.query.id,
+  });
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: drawerWidth,
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-start",
-}));
-
-export default function PersistentDrawerRight() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+  if (query.isLoading) {
+    return <Loading />;
+  }
+  console.log("query --->", query.data.data);
+  //================================================
   return (
-    <Box sx={{ display: "flex" ,backgroundColor:"wheat",m:"auto"}} maxWidth='md'>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{
-        // width:"50%",
-        // mr:50
-      }}>
-        <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            Persistent drawer
-          </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            sx={{ ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Main open={open}>
-        <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </Main>
-      <Drawer
+    <Container maxWidth="md">
+      <Box
         sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-          },
+          backgroundColor: query?.data?.data.status === "NEW" ? "red" : "#22BB33",
+          width:"20%",
+          textAlign:"center",
+          fontWeight:"bolder",
+          mb:2,
+          color: "white",
+          p: 1,
+          borderRadius: "10px",
         }}
-        variant="persistent"
-        anchor="right"
-        open={open}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </Box>
+        {query?.data?.data.status}
+      </Box>
+      {/* -------------------------------------------------- */}
+      <Grid
+        container
+        sx={{
+          // width:"150%",
+          ml: -5,
+          display: "flex",
+          // justifyContent: "space-between",
+          boxShadow: "0px 2px 3px 0px grey",
+          background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+          p: 1,
+          borderRadius: "8px",
+        }}
+      >
+        <Grid item sm={12} md={6} lg={6} xl={6} sx={{ display: "flex" }}>
+          <Avatar sx={{ mr: 1, fontSize: 5 }} />
+          <Box>
+            <Typography sx={{ fontWeight: 600, color: "gray" }}>
+              {query?.data?.data.name}
+            </Typography>
+            <Typography
+              variant="caption" 
+              sx={{
+                color: "gray",
+                inlineSize: "150px",
+                wordWrap: "break-word",
+              }}
+            >
+              {query?.data?.data.email}
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          sx={{ display: "flex", alignSelf: "center" }}
+        >
+          <BedIcon sx={{ alignSelf: "center", mr: 1, color: "gray" }} />
+          <Typography
+            sx={{ fontWeight: 600, color: "gray", mr: 5, alignSelf: "center" }}
+          >
+            Double
+          </Typography>
+          <OutletIcon sx={{ mr: 1, color: "gray" }} />
+          <Typography sx={{ fontWeight: 600, color: "gray" }}>789</Typography>
+        </Grid>
+        <Grid
+          item
+          sm={12}
+          md={12}
+          lg={12}
+          xl={12}
+          // sx={{ }}
+        >
+          <Typography sx={{ fontWeight: 600, color: "gray", mr: 1, mt: 2 }}>
+            Joined on : 28th Aug `22
+          </Typography>
+        </Grid>
+        {/* <Grid item sm={12} md={4} lg={4} xl={4}> */}{" "}
+        <Typography sx={{ color: "gray", mr: 1, mt: 2 }}>
+          Rent Structure
+        </Typography>
+        <Divider sx={{ backgroundColor: "red", width: "90%", m: 2 }} />
+        {/* ------------------------------------------ */}
+        {/* <Box sx={{ display: "flex" }}> */}
+        <Grid
+          item
+          xs={12}
+          sm={2}
+          md={2}
+          lg={2}
+          xl={2}
+          sx={{ display: windowDimensions.width <= 500 ? "column" : "flex" }}
+        >
+          {/* <Box sx={{ display: "flex" }}> */}
+          {/* ----------------------- */}
+          <Box>
+            <Box
+              sx={{
+                // width: "80px",
+                // height: "80px",
+                p: 2,
+                borderRadius: 1,
+                backgroundColor: "white",
+                boxShadow: "0px 2px 3px 0px grey",
+                mr: 5,
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: "gray",
+                  fontWeight: "bolder",
+                  textAlign: "center",
+                }}
+              >
+                25
+              </Typography>
+            </Box>
+            <Typography variant="caption" sx={{ color: "gray", mr: 1, mt: 2 }}>
+              Left out days
+            </Typography>
+          </Box>
+
+          <Box>
+            <Box
+              sx={{
+                // width: "100%",
+                // height: "80px",
+                p: 2,
+                borderRadius: 1,
+                backgroundColor: "white",
+                boxShadow: "0px 2px 3px 0px grey",
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: "gray",
+                  fontWeight: "bolder",
+                  textAlign: "center",
+                }}
+              >
+                2,500
+              </Typography>
+            </Box>
+            <Typography variant="caption" sx={{ color: "gray", mr: 1, mt: 2 }}>
+              Left out days
+            </Typography>
+          </Box>
+          {/* </Box>   */}
+          {/* ----------------------- */}
+        </Grid>
+        {/* </Box> */}
+        {/* ------------------------------------------ */}
+        {/* </Grid> */}
+      </Grid>
+      {/* -------------------------------------------------- */}
+    </Container>
   );
 }
+//============================================================
+Home.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
