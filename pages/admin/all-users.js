@@ -4,9 +4,11 @@ import DashboardLayout from "../../components/layout/dashboard-layout";
 import { useController } from "../../controller/user";
 import Table from "../../components/table";
 import Loading from "../../components/loading";
+import { useRouter } from "next/router";
 //==========================================
 export default function AllUsers() {
   const theme = useTheme();
+  const router = useRouter()
   const { queryAll } = useController();
 
   if (queryAll.isLoading) {
@@ -42,8 +44,8 @@ export default function AllUsers() {
       ),
     },
     {
-      field: "edit",
-      headerName: "Edit",
+      field: "Details",
+      headerName: "More details",
       minWidth: 150,
       editable: true,
       renderCell: (params) => (
@@ -56,45 +58,15 @@ export default function AllUsers() {
           variant="outlined"
           onClick={() => {
             // console.log("------>",params.id)
-            router.push(`/admin/register/?id=${params.id}`);
+            router.push(`/admin/user/details/?id=${params.id}`);
           }}
         >
-          Register
+          Details
         </Button>
       ),
       flex: 1,
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      minWidth: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Button
-          sx={{
-            backgroundColor: "red",
-            border: "1px solid #ff855f",
-            color: "white",
-          }}
-          variant="outlined"
-          onClick={() => {
-            console.log(params.id);
-            deleteUser(params.id).then(() => {
-              return Swal.fire(
-                "User deleted ",
-                "User has been un-registered",
-                "success"
-              ).then(() => {
-                query.refetch(), router.push("/admin/home");
-              });
-            });
-          }}
-        >
-          Delete
-        </Button>
-      ),
-      flex: 1,
-    },
+   
   ];
 
   //===============================

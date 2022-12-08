@@ -1,3 +1,4 @@
+import DashboardLayout from "../../../components/layout/dashboard-layout";
 import {
   Grid,
   Typography,
@@ -5,41 +6,14 @@ import {
   Container,
   Avatar,
   Divider,
+  TextField,
 } from "@mui/material";
-import DashboardLayout from "../../components/layout/user-layout";
-import BedIcon from "@mui/icons-material/Bed";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { getUserById } from "../../../api/user";
 import { useQuery } from "@tanstack/react-query";
-import { getUserById } from "../../api/user";
-import Loading from "../../components/loading";
-import OutletIcon from "@mui/icons-material/Outlet";
-//===========================================================
-function getWindowDimensions() {
-  if (typeof window !== "undefined") {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
-    };
-  }
-}
-//--------------------------------------------------------
-export default function Home() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
-  //---------------------------------------------------
+import { useRouter } from "next/router";
+import Loading from "../../../components/loading";
+//========================================
+export default function UserDetails() {
   const router = useRouter();
 
   const query = useQuery({
@@ -51,10 +25,10 @@ export default function Home() {
   if (query.isLoading) {
     return <Loading />;
   }
-  console.log("query --->", query.data.data);
-  //================================================
+  //=======================================
+
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ ml: 5 }}>
       {/* ------------------- GENERAL_INFORMATION ------------------------------- */}
 
       <Typography
@@ -89,7 +63,7 @@ export default function Home() {
           }}
         >
           <Avatar sx={{ mr: 1, fontSize: 5 }} />
-          <Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography sx={{ fontWeight: 600, color: "gray" }}>
               {query?.data?.data.name}
             </Typography>
@@ -102,6 +76,16 @@ export default function Home() {
               }}
             >
               {query?.data?.data.email}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "gray",
+                inlineSize: "150px",
+                wordWrap: "break-word",
+              }}
+            >
+              {query?.data?.data.phone}
             </Typography>
           </Box>
         </Grid>
@@ -156,12 +140,8 @@ export default function Home() {
       <Grid
         container
         sx={{
-          // width:"150%",
           ml: -5,
-          // mt: 5,
           display: "flex",
-          // justifyContent: "space-around",
-          // alignItems:"space-between",
           boxShadow: "0px 2px 3px 0px grey",
           background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
           p: 1,
@@ -178,24 +158,17 @@ export default function Home() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            p: 3,
+            p: 1,
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <Typography sx={{ fontWeight: 600, color: "gray" }}>
-              Room Number :
-            </Typography>
-            <Typography
-              // variant="caption"
-              sx={{
-                color: "#28282B",
-                ml: 1,
-                fontWeight: "bold",
-              }}
-            >
-              211
-            </Typography>
-          </Box>
+          {/* <Box sx={{ display: "flex" }}> */}
+          <Typography
+            sx={{ fontWeight: 600, color: "gray", alignSelf: "center" }}
+          >
+            Room Number :
+          </Typography>
+
+          {/* </Box> */}
         </Grid>
         <Grid
           item
@@ -207,24 +180,113 @@ export default function Home() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            p: 3,
+            p: 1,
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <Typography sx={{ fontWeight: 600, color: "gray" }}>
-              Room Preference :
-            </Typography>
-            <Typography
-              // variant="caption"
-              sx={{
-                color: "#28282B",
-                ml: 1,
-                fontWeight: "bold",
-              }}
-            >
-              Doubble
-            </Typography>
-          </Box>
+          <TextField
+            InputProps={{
+              inputProps: {
+                style: { textAlign: "left" },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="211"
+          />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            p: 1,
+          }}
+        >
+          {/* <Box sx={{ display: "flex" }}> */}
+          <Typography
+            sx={{ fontWeight: 600, color: "gray", alignSelf: "center" }}
+          >
+            Room Preference :
+          </Typography>
+
+          {/* </Box> */}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            p: 1,
+          }}
+        >
+          <TextField
+            InputProps={{
+              inputProps: {
+                style: { textAlign: "left" },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="doubble"
+          />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            p: 1,
+          }}
+        >
+          {/* <Box sx={{ display: "flex" }}> */}
+          <Typography
+            sx={{ fontWeight: 600, color: "gray", alignSelf: "center" }}
+          >
+            Joining Date :
+          </Typography>
+
+          {/* </Box> */}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            p: 1,
+          }}
+        >
+          <TextField
+            InputProps={{
+              inputProps: {
+                style: { textAlign: "left" },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="21/2/2023"
+          />
         </Grid>
       </Grid>
 
@@ -245,6 +307,7 @@ export default function Home() {
           background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
           p: 1,
           borderRadius: "8px",
+          mb:2
         }}
       >
         <Grid
@@ -278,11 +341,20 @@ export default function Home() {
             p: 1,
           }}
         >
-          <Typography
-            sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
-          >
-            ₹ 8,510
-          </Typography>
+         <TextField
+            InputProps={{
+              inputProps: {
+                style: {
+                  textAlign: "left",
+                  fontWeight: 600,
+                  color: "#28282B",
+                },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="8508"
+          />{" "}
         </Grid>
 
         <Grid
@@ -316,11 +388,20 @@ export default function Home() {
             p: 1,
           }}
         >
-          <Typography
-            sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
-          >
-            ₹ 8,50
-          </Typography>
+           <TextField
+            InputProps={{
+              inputProps: {
+                style: {
+                  textAlign: "left",
+                  fontWeight: 600,
+                  color: "#28282B",
+                },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="8508"
+          />{" "}
         </Grid>
 
         <Grid
@@ -338,7 +419,7 @@ export default function Home() {
           }}
         >
           <Typography sx={{ fontWeight: 600, color: "gray", fontSize: "20px" }}>
-            Miscellaneous :
+            Misc. :
           </Typography>
         </Grid>
         <Grid
@@ -354,70 +435,26 @@ export default function Home() {
             p: 1,
           }}
         >
-          {/* <TextField/> */}
-          <Typography
-            sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
-          >
-            ₹ 8,510
-          </Typography>
+          <TextField
+            InputProps={{
+              inputProps: {
+                style: {
+                  textAlign: "left",
+                  fontWeight: 600,
+                  color: "#28282B",
+                },
+              },
+            }}
+            variant="outlined"
+            size="small"
+            defaultValue="8508"
+          />{" "}
         </Grid>
       </Grid>
 
       {/* ------------ GENERAL_NOTICE ------------------------------ */}
 
-      <Typography
-        variant="h5"
-        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5, ml: -5 }}
-      >
-        General Notice
-      </Typography>
-      <Box
-        maxWidth="md"
-        container
-        sx={{
-          ml: -5,
-          mb:5,
-
-          // display: "flex",
-          boxShadow: "0px 2px 3px 0px grey",
-          background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
-          p: 1,
-          borderRadius: "8px",
-        }}
-      >
-        <Box
-          sx={{
-            backgroundColor: "white",
-            border: "2px dashed blue",
-
-            color: "blue",
-            textAlign: "center",
-            fontWeight: "bolder",
-            // mb: 2,
-            p: 1,
-            borderRadius: "8px",
-            display: "inline-block",
-          }}
-        >
-          Laundary Tag
-        </Box>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: 600, color: "#28282B", mb: 1, mt: 2 ,ml:1}}
-        >
-          Notice Title Here
-        </Typography>
-        <Box sx={{ width: "99%",p:2 }}>
-          <Typography sx={{ fontWeight: 600, color: "gray" }}>
-            On Today onwards laundary waala will take the cloths in the separate
-            bag, which is provided to every student, On Today onwards laundary
-            waala will take the cloths in the separate bag, which is provided to
-            every student
-          </Typography>
-        </Box>
-      </Box>
     </Container>
   );
 }
-//============================================================
-Home.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+UserDetails.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
