@@ -27,14 +27,13 @@ import Swal from "sweetalert2";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useDarkMode } from "../../context/darkMode";
 import { useTheme } from "@mui/styles";
-
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 //===================================================================
 const drawerWidth = 250;
 
@@ -235,20 +234,14 @@ export default function DashboardSidebar(props) {
           <List>
             {[
               {
-                href: "/financial-dashobard/my-gold-financials",
-                title: "About",
+                href: "/admin/home",
+                title: "Dashboard",
+                icon: <DashboardIcon />,
               },
               {
-                href: "/retail-dashboard/retail",
-                title: "Retail",
-              },
-              {
-                href: "/inventory-dashboard/inventory",
-                title: "Inventory",
-              },
-              {
-                href: "/app-bar ",
-                title: "App Bar",
+                href: "/admin/user/rental",
+                title: "Rental",
+                icon: <RequestQuoteIcon />,
               },
             ].map((text, index) => (
               <ListItem
@@ -273,7 +266,15 @@ export default function DashboardSidebar(props) {
                       fontWeight: "bolder",
                     }}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <NextLink
+                      sx={{ fontWeight: "bolder" }}
+                      href={text.href}
+                      passHref
+                    >
+                      {text.icon}
+                    </NextLink>
+                    {/* <DashboardIcon/> */}
+                    {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                   </ListItemIcon>
                   <NextLink
                     sx={{ fontWeight: "bolder" }}

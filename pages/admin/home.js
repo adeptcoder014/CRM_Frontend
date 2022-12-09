@@ -131,7 +131,7 @@ export default function Home(props) {
         }),
       }}
     >
-      <Grid sx={{ cursor: "pointer" }} container>
+      <Grid  sx={{ cursor: "pointer" }} container>
         <InfoCard title="All Users" url="/admin/all-users" />
         <InfoCard title="All Registered Users" />
       </Grid>

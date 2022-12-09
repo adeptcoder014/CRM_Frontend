@@ -41,11 +41,8 @@ export default function UserDetails() {
       <Grid
         container
         sx={{
-          // width:"150%",
           ml: -5,
           display: "flex",
-          // justifyContent: "space-around",
-          // alignItems:"space-between",
           boxShadow: "0px 2px 3px 0px grey",
           background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
           p: 1,
@@ -101,18 +98,23 @@ export default function UserDetails() {
         >
           <Box
             sx={{
-              backgroundColor:
-                query?.data?.data.status === "NEW" ? "red" : "#22BB33",
-              // width: "20%",
-              textAlign: "center",
-              fontWeight: "bolder",
-              mb: 2,
-              color: "white",
-              p: 1,
-              borderRadius: "8px",
             }}
-          >
-            {query?.data?.data.status}
+            >
+            <Typography
+              sx={{
+                p: 1,
+                backgroundColor:
+                query?.data?.data.status === "NEW" ? "red" : "#22BB33",
+                // width: "20%",
+                textAlign: "center",
+                fontWeight: "bolder",
+                borderRadius: "8px",
+
+                color: "white",
+              }}
+            >
+              {query?.data?.data.status}
+            </Typography>
           </Box>
         </Grid>
         {/* ------------------------------------------ */}
@@ -307,7 +309,7 @@ export default function UserDetails() {
           background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
           p: 1,
           borderRadius: "8px",
-          mb:2
+          mb: 2,
         }}
       >
         <Grid
@@ -341,7 +343,7 @@ export default function UserDetails() {
             p: 1,
           }}
         >
-         <TextField
+          <TextField
             InputProps={{
               inputProps: {
                 style: {
@@ -388,7 +390,7 @@ export default function UserDetails() {
             p: 1,
           }}
         >
-           <TextField
+          <TextField
             InputProps={{
               inputProps: {
                 style: {
@@ -453,7 +455,6 @@ export default function UserDetails() {
       </Grid>
 
       {/* ------------ GENERAL_NOTICE ------------------------------ */}
-
     </Container>
   );
 }

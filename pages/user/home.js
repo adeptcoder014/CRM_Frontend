@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserById } from "../../api/user";
 import Loading from "../../components/loading";
 import OutletIcon from "@mui/icons-material/Outlet";
+import dayjs from "dayjs";
 //===========================================================
 function getWindowDimensions() {
   if (typeof window !== "undefined") {
@@ -51,7 +52,8 @@ export default function Home() {
   if (query.isLoading) {
     return <Loading />;
   }
-  console.log("query --->", query.data.data);
+
+  const user = query.data.data
   //================================================
   return (
     <Container maxWidth="md">
@@ -142,7 +144,7 @@ export default function Home() {
           // sx={{ }}
         >
           <Typography sx={{ fontWeight: 600, color: "gray", mr: 1, mt: 2 }}>
-            Joined on : 28th Aug `22
+              Joined on : {dayjs(user.joiningDate).format("DD ddd YYYY")}
           </Typography>
         </Grid>
       </Grid>
@@ -193,7 +195,7 @@ export default function Home() {
                 fontWeight: "bold",
               }}
             >
-              211
+              {user.room}
             </Typography>
           </Box>
         </Grid>
@@ -222,7 +224,7 @@ export default function Home() {
                 fontWeight: "bold",
               }}
             >
-              Doubble
+              {user.roomPreference}
             </Typography>
           </Box>
         </Grid>
@@ -281,7 +283,7 @@ export default function Home() {
           <Typography
             sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
           >
-            ₹ 8,510
+            ₹ {user.dues}
           </Typography>
         </Grid>
 
@@ -319,7 +321,7 @@ export default function Home() {
           <Typography
             sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
           >
-            ₹ 8,50
+            ₹ {user.eBills}
           </Typography>
         </Grid>
 
@@ -358,7 +360,7 @@ export default function Home() {
           <Typography
             sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
           >
-            ₹ 8,510
+            ₹ {user.misc}
           </Typography>
         </Grid>
       </Grid>

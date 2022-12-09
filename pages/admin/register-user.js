@@ -35,14 +35,31 @@ import { useState } from "react";
 import { ADMIN_URL } from "../../constants/url";
 //============================================================================
 export default function RegisterUser() {
+  //============ RENTAL_STRUCTURE ================================
+  const giveRemainingRent = (days) => {
+    const remainingDays = 30 - days;
+    const remainingRent =
+      remainingDays * rentQuery?.data?.data?.data[0].rentPerDay; // Gives --> Remaining Days + Remaining Rent(for the first month)
+    return { remainingDays, remainingRent };
+  };
+  //============================================
   const { rentQuery } = useRentController();
   const router = useRouter();
+
   const query = useQuery({
     queryKey: ["userById", router.query.id],
     queryFn: () => getUserById(router.query.id),
-    onSuccess: (res) => patchForm.setValues(res.data),
+    onSuccess: (res) =>
+      // console.log(res.data.registeredDate),
+      patchForm.setValues(res.data),
     enabled: !!router.query.id,
   });
+
+  const dueRent = giveRemainingRent(
+    query?.data?.data?.registeredDate.split("T")[0].split("-")[2]
+  );
+
+  // console.log("<<<<<<<<", dueRent.remainingRent);
 
   const patchForm = useFormik({
     initialValues: {
@@ -51,6 +68,12 @@ export default function RegisterUser() {
       discount: 0,
       security: 0,
       remark: "",
+      joiningDate: "",
+      // dues: {
+      //   rent: "Lauda hai ------->",
+      // },
+
+      dues: "",
     },
     validationSchema: approvalValidation,
     onSubmit: (values) => {
@@ -77,28 +100,10 @@ export default function RegisterUser() {
   if (rentQuery.isLoading) {
     return <Loading />;
   }
-  //============ RENTAL_STRUCTURE ================================
-  const giveRemainingRent = (days) => {
-    const remainingDays = 30 - days;
-    const remainingRent =
-      remainingDays * rentQuery.data.data.data[0].rentPerDay;
-    return { remainingDays, remainingRent };
-  };
-  //============================================
-  const dueRent = giveRemainingRent(
-    query?.data?.data?.registeredDate.split("T")[0].split("-")[2]
-  );
+
   //=====================================================
-  // const img = new Buffer.from(query?.data?.data?.photo.data.data).toString("base64");
-  // const base64String = new Buffer(query?.data?.data?.photo?.data?.data).toString('base64')
-
-  // console.log("base64String ---", base64String);
-
-  //============================
   return (
     <>
-  
-
       <Container
         maxWidth="md"
         sx={{
@@ -123,7 +128,7 @@ export default function RegisterUser() {
               // alt="helloWorld"
               // src={`http://localhost:5000/${query?.data?.data?.photo}`}
               src={`${ADMIN_URL}/${query?.data?.data?.photo}`}
-              style={{border:"1px dashed gray"}}
+              style={{ border: "1px dashed gray" }}
             />{" "}
           </Box>
           <Box item xl={6} lg={6} md={4} xs={12} sx={{ flexBasis: "350px" }}>
@@ -218,6 +223,7 @@ export default function RegisterUser() {
         }}
       >
         <form onSubmit={patchForm.handleSubmit}>
+          {" "}
           <Box
             sx={{
               backgroundColor: "white",
@@ -312,101 +318,31 @@ export default function RegisterUser() {
                 xs={12}
                 sx={{ display: "flex", flexDirection: "column", mt: 5 }}
               >
-                <FormLabel sx={{ mb: 2 }}>Rent Structure</FormLabel>
+                <FormLabel sx={{ mb: 2 }}>Joining Date </FormLabel>
 
-                {/* <TextField
+                <TextField
                   error={
-                    patchForm.touched.discount &&
-                    Boolean(patchForm.errors.discount)
+                    patchForm.touched.joiningDate &&
+                    Boolean(patchForm.errors.joiningDate)
                   }
                   helperText={
-                    patchForm.touched.discount && patchForm.errors.discount
+                    patchForm.touched.joiningDate &&
+                    patchForm.errors.joiningDate
                   }
-                  id="discount"
-                  name="discount"
-                  type="number"
-                  value={patchForm?.values?.discount}
+                  id="joiningDate"
+                  type="date"
+                  name="joiningDate"
+                  value={patchForm?.values?.joiningDate.split("T")[0]}
                   onChange={patchForm.handleChange}
-                  sx={{ width: "90%" }}
+                  sx={{
+                    width: "90%",
+                    "& label.Mui-focused": {
+                      color: "red",
+                    },
+                  }}
                   size="small"
                   variant="standard"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <DiscountIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
-                <div style={{ width: "90%", marginTop: -15 }}>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography>Rental details</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {/* <Typography>Verify Details</Typography> */}
-                      {/* ------------------------------------------- */}
-                      {/* <Typography>Rent :</Typography> */}
-
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          fontFamily: "popins",
-                        }}
-                      >
-                        <Typography>Date of joining</Typography>
-                        <Typography>
-                          {query?.data?.data?.registeredDate.split("T")[0]}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          // zoom:"78%",
-                          fontSize: "10px",
-                          mt: 1,
-                        }}
-                      >
-                        <Typography>Left over days</Typography>
-                        <Typography>{dueRent.remainingDays}</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          backgroundColor: "ghostwhite",
-                          boxShadow: "0px 2px 2px 0px #00000070",
-                          p: 2,
-                          borderRadius: 1,
-                          color: "gray",
-                          // zoom:"78%",
-                          fontSize: "10px",
-                          mt: 1,
-                        }}
-                      >
-                        <Typography>Due payment</Typography>
-                        <Typography>{dueRent.remainingRent}</Typography>
-                      </Box>
-                      {/* -------------------------------------------- */}
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                />
               </Grid>
               <Grid
                 className="responsive"
