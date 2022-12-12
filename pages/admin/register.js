@@ -21,7 +21,7 @@ import { useState } from "react";
 //============================================
 export default function Register() {
   const { add, addForm } = useController();
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   //=============================================
   return (
     <>

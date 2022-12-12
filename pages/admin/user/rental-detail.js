@@ -41,13 +41,15 @@ export default function UserRentalDetails() {
   );
   const [rent, setRent] = useState(query?.data?.data?.dues);
 
-
-  
+  if (!query.isLoading) {
+    // return <Loading />;
+  }
+  const user = query?.data?.data
 
   if (query.isLoading) {
     return <Loading />;
   }
-console.log(rentQuery.data.data.data)
+console.log(query.data.data)
  
   //===================================================
 
@@ -61,14 +63,14 @@ console.log(rentQuery.data.data.data)
       </Typography>
       {/* =========================== */}
 
-      <Grid container>
+      <Grid container sx={{gap:1}}>
         {/* ----------------------------- */}
         <Grid
           item
           xs={12}
           sm={4}
-          md={4}
-          lg={4}
+          md={6}
+          lg={6}
           xl={4}
           sx={{ boxShadow: "0px 5px 7px 0px #cfcaca", p: 3, borderRadius: 1 }}
         >
@@ -121,6 +123,30 @@ console.log(rentQuery.data.data.data)
               variant="caption"
               sx={[theme.custom.typography.h1, { fontSize: 14 }]}
             >
+              Security
+            </Typography>
+
+            <Typography
+              variant="caption"
+              sx={[theme.custom.typography.h1, { fontSize: 14 }]}
+            >
+              {user.security}
+            </Typography>
+          </Box>
+
+
+          <Box
+            sx={{
+              mt: 2,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "space-between",
+            }}
+          >
+            <Typography
+              variant="caption"
+              sx={[theme.custom.typography.h1, { fontSize: 14 }]}
+            >
               Est. Rent
             </Typography>
 
@@ -131,6 +157,7 @@ console.log(rentQuery.data.data.data)
               {rent}
             </Typography>
           </Box>
+
 
           <Box
             sx={{
@@ -159,8 +186,8 @@ console.log(rentQuery.data.data.data)
           item
           xs={12}
           sm={4}
-          md={4}
-          lg={4}
+          md={6}
+          lg={5}
           xl={4}
           sx={{ boxShadow: "0px 5px 7px 0px #cfcaca", p: 3, borderRadius: 1 }}
         >
@@ -308,6 +335,7 @@ console.log(rentQuery.data.data.data)
           backgroundColor: "white",
           p: 1,
           borderRadius: "5px",
+          mb:2
         }}
         onClick={() =>
           axiosInstance

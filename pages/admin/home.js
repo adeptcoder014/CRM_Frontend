@@ -14,6 +14,7 @@ import { deleteUser } from "../../api/user";
 import Swal from "sweetalert2" ;
 import InfoCard from "../../components/cards/InfoCard";
 import {TokenProvider} from "../../context/localStorageToken"
+import axios from "axios";
 //==========================================================
 export default function Home(props) {
   const router = useRouter();
@@ -149,7 +150,14 @@ export default function Home(props) {
           <Table rows={query?.data?.data?.user} columns={columns} />
         </Box>
       </Container>
+  {/* <Box>
+    {axios.get("http://localhost:5000/array").then(res =>(
+      
+    ))}
+  </Box> */}
     </Box>
+
+  
   );
 }
 Home.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
