@@ -144,7 +144,7 @@ export default function Home() {
           // sx={{ }}
         >
           <Typography sx={{ fontWeight: 600, color: "gray", mr: 1, mt: 2 }}>
-              Joined on : {dayjs(user.joiningDate).format("DD ddd YYYY")}
+              Joined on : {dayjs(user.joiningDate).format(`DD/MM/YYYY`)}
           </Typography>
         </Grid>
       </Grid>

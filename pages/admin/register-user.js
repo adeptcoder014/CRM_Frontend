@@ -70,7 +70,9 @@ export default function RegisterUser() {
       remark: "",
       joiningDate: "",
       // dues: {
-      //   rent: "Lauda hai ------->",
+      //   rents: [
+      //     rentCycle:
+      //   ]
       // },
 
       dues: "",
