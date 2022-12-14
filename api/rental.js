@@ -5,7 +5,7 @@ export const getRent = () => {
   return axiosInstance.get(`/rent`);
 };
 //------------------------------------
-export const getRentStructure = (joiningDate) => {
+export const getRentById = (joiningDate) => {
     // console.log("joiningDate --------------->",joiningDate)
 
   return axiosInstance.get(`/rent/structure/?date=${joiningDate}`);

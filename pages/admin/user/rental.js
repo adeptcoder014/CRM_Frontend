@@ -55,7 +55,7 @@ export default function UserRent() {
     },
     {
       field: "edit",
-      headerName: "Edit",
+      headerName: "Rent",
       minWidth: 150,
       editable: true,
       renderCell: (params) => (
@@ -72,6 +72,30 @@ export default function UserRent() {
           }}
         >
           Rental Details
+        </Button>
+      ),
+      flex: 1,
+    },
+
+    {
+      // field: "edit",
+      headerName: "E-bill",
+      minWidth: 150,
+      editable: true,
+      renderCell: (params) => (
+        <Button
+          sx={{
+            backgroundColor: "white",
+            border: "1px solid #ff855f",
+            color: "#ff855f",
+          }}
+          variant="outlined"
+          onClick={() => {
+            // console.log("------>",params.id)
+            router.push(`/admin/user/ebill-detail/?id=${params.id}`);
+          }}
+        >
+          E-Bills Details
         </Button>
       ),
       flex: 1,

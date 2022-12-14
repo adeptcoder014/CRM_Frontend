@@ -35,7 +35,6 @@ export default function RentEntry() {
   }, []);
   const [rentCycle, setRentCycle] = useState();
 
-  console.log(rentCycle)
   //===========================
   return (
     <>

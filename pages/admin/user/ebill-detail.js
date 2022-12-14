@@ -25,6 +25,8 @@ import dayjs from "dayjs";
 import { useRentController } from "../../../controller/rental";
 import RentEntry from "../../../components/rentEntryCard";
 import RentShow from "../../../components/rentShowCard";
+import EbillEntry from "../../../components/ebillEntryCard";
+import EbillShow from "../../../components/ebillShowCard";
 //========================================
 export default function UserRentalDetails() {
   const theme = useTheme();
@@ -36,6 +38,10 @@ export default function UserRentalDetails() {
     queryFn: () => getUserById(router.query.id),
     enabled: !!router.query.id,
   });
+
+  if (!query.isLoading) {
+    console.log(query.data.data.dues.eBills);
+  }
 
   //==============
   return (
@@ -58,7 +64,7 @@ export default function UserRentalDetails() {
             justifyContent: "space-around",
           }}
         >
-          <RentEntry />
+          <EbillEntry user={query?.data?.data} />
         </Grid>
       </Box>
       <Grid
@@ -75,15 +81,11 @@ export default function UserRentalDetails() {
           // justifyContent: "space-around",
         }}
       >
-        {query?.data?.data?.dues?.rents?.map((x) => (
-          <RentShow
-            month={x.month}
-            rentCycle={x.rentCycle}
-            year={x.year}
-            rent={x.rent}
-            status={x.status}
-            rentId={x._id}
-            userId={query?.data?.data.id}
+        {query?.data?.data?.dues?.eBills?.map((x) => (
+          <EbillShow
+            pricePerUnit={x.pricePerUnit}
+            reading={x.reading}
+            total={x.total}
           />
         ))}
       </Grid>
