@@ -21,13 +21,13 @@ const months = ["January", "Feburary", "March"];
 const years = [2021, 2022, 2023];
 
 //=====================
-export default function RentEntry() {
+export default function RentEntry(props) {
   //==========================
   const router = useRouter();
 
   const [rent, setRent] = useState(0);
   const [year, setYear] = useState(0);
-  
+  const [reading, setReading] = useState(0);
   const [month, setMonth] = useState();
   //===========================
   useEffect(() => {
@@ -58,7 +58,17 @@ export default function RentEntry() {
         />
       </Grid>
       <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
+        <Typography sx={{ mb: 2, fontWeight: "bold" }}>Ebill</Typography>
+        <TextField
+          size="small"
+          variant="standard"
+          type="number"
+          onChange={(e) => setReading(e.target.value)}
+        />
+      </Grid>
+      <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
         <Typography sx={{ mb: 2 }}>Year</Typography>
+        {/* <input type="month"/> */}
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">year</InputLabel>
           <Select
@@ -100,6 +110,8 @@ export default function RentEntry() {
                 year: year,
                 month: month,
                 rentCycle: rentCycle,
+                reading: Number(reading),
+                initialReading:props.user.meterReading
               })
               .then((res) =>
                 Swal.fire("Rent updated !", "Rent updated", "success")

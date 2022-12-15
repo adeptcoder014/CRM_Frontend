@@ -39,7 +39,7 @@ const style = {
   p: 4,
 };
 
-const months = ["January", "Feburary", "March"];
+const months = ["December", "January", "Feburary", "March"];
 const years = [2021, 2022, 2023];
 
 //============================================
@@ -66,9 +66,11 @@ export default function RentShow(props) {
 
   const patchForm = useFormik({
     initialValues: {
-      rent: 0,
+      // rent: 0,
       month: "",
       year: 0,
+      eBills: 0,
+      due: 0,
     },
     // validationSchema: adminLoginValidation,
     onSubmit: (values) => {
@@ -111,26 +113,47 @@ export default function RentShow(props) {
         <Fade in={open}>
           <Box sx={style}>
             <form onSubmit={patchForm.handleSubmit}>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography
-                  id="transition-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
-                  Edit Rent
-                </Typography>
-                <FormLabel>Rent</FormLabel>
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                Edit Rent
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  p: 2,
+                  boxShadow: " 0px -2px 6px 0px grey",
+                  background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+                  borderRadius: "8px",
+                  mb: 1,
+                }}
+              >
+                <FormLabel>Have given</FormLabel>
                 <TextField
-                  id="rent"
-                  name="rent"
+                  id="due.rentDue"
+                  name="due.rentDue"
                   size="small"
                   type="number"
                   variant="standard"
-                  value={patchForm.values.rent}
+                  defaultValue={patchForm.values.due.rentDue}
                   onChange={patchForm.handleChange}
                 />{" "}
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  p: 2,
+                  boxShadow: " 0px -2px 6px 0px grey",
+                  background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+                  borderRadius: "8px",
+                  mb: 1,
+                }}
+              >
+                {" "}
                 <Typography sx={{ mb: 2 }}>Month</Typography>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">month</InputLabel>
@@ -146,6 +169,19 @@ export default function RentShow(props) {
                     ))}
                   </Select>
                 </FormControl>{" "}
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  p: 2,
+                  boxShadow: " 0px -2px 6px 0px grey",
+                  background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+                  borderRadius: "8px",
+                  mb: 1,
+                }}
+              >
+                <Typography sx={{ mb: 2 }}>Year</Typography>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">year</InputLabel>
                   <Select
@@ -161,6 +197,30 @@ export default function RentShow(props) {
                     ))}
                   </Select>
                 </FormControl>{" "}
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  p: 2,
+                  boxShadow: " 0px -2px 6px 0px grey",
+                  background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+                  borderRadius: "8px",
+                  mb: 1,
+                }}
+              >
+                <Tooltip title={patchForm.values.eBills.reading}>
+                  <Typography sx={{ mb: 2 }}>E-Bill</Typography>
+                </Tooltip>
+                <TextField
+                  id="due.ebillDue"
+                  name="due.ebillDue"
+                  size="small"
+                  type="number"
+                  variant="standard"
+                  defaultValue={patchForm.values.due.ebillDue}
+                  onChange={patchForm.handleChange}
+                />{" "}
               </Box>
               <Button
                 onClick={() => {
@@ -196,7 +256,7 @@ export default function RentShow(props) {
           mb: 2,
         }}
       >
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
           <Box sx={{ display: "flex" }}>
             <Tooltip title={props.rentCycle}>
               <PedalBikeIcon sx={{ color: "gray", fontSize: "18px", mr: 1 }} />
@@ -217,40 +277,50 @@ export default function RentShow(props) {
             </Typography>
           </Tooltip>
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
           <Typography>Rent</Typography>
           <Typography> {props.rent ? props.rent : "₹ x,xxx"}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
-          <Typography>Status</Typography>
-          {props.status === "DUE" ? (
-            <Typography
-              sx={{
-                color: "white",
-                backgroundColor: "#E34234",
-                borderRadius: 1,
-                width: "fit-content",
-                p: "2px 51px",
-              }}
-            >
-              {props.status}
-            </Typography>
-          ) : (
-            <Typography
-              sx={{
-                color: "white",
-                backgroundColor: "#7fff00",
-
-                borderRadius: 1,
-                width: "fit-content",
-                p: "2px 51px",
-              }}
-            >
-              {props.status}
-            </Typography>
-          )}
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
+          <Typography>To be receive</Typography>
+          <Typography> {props.rentDue}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
+          <Typography>Ebill</Typography>
+          <Typography> {props.ebillDue}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
+          <Typography>Status</Typography>
+          <Tooltip title={props?.due?.total}>
+            {props.status === "DUE" ? (
+              <Typography
+                sx={{
+                  color: "white",
+                  backgroundColor: "#E34234",
+                  borderRadius: 1,
+                  width: "fit-content",
+                  p: "2px 51px",
+                }}
+              >
+                {props.status}
+              </Typography>
+            ) : (
+              <Typography
+                sx={{
+                  color: "white",
+                  backgroundColor: "#7fff00",
+
+                  borderRadius: 1,
+                  width: "fit-content",
+                  p: "2px 51px",
+                }}
+              >
+                {props.status}
+              </Typography>
+            )}
+          </Tooltip>
+        </Grid>
+        <Grid item xs={12} sm={2} md={2} lg={2} xl={2} sx={{}}>
           <Typography>UpdateRent</Typography>
           <Button
             // onClick={handleOpen}

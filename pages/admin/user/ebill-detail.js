@@ -35,12 +35,12 @@ export default function UserRentalDetails() {
 
   const query = useQuery({
     queryKey: ["userById", router.query.id],
-    queryFn: () => getUserById(router.query.id),
+    queryFn: () => getUserById(router?.query?.id),
     enabled: !!router.query.id,
   });
 
   if (!query.isLoading) {
-    console.log(query.data.data.dues.eBills);
+    console.log("Ebills ----->",query.data.data.dues.eBills);
   }
 
   //==============

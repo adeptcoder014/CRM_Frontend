@@ -58,7 +58,7 @@ export default function UserRentalDetails() {
             justifyContent: "space-around",
           }}
         >
-          <RentEntry />
+          <RentEntry user={query?.data?.data} />
         </Grid>
       </Box>
       <Grid
@@ -84,6 +84,9 @@ export default function UserRentalDetails() {
             status={x.status}
             rentId={x._id}
             userId={query?.data?.data.id}
+            rentDue={x.due.rentDue}
+            ebillDue={x.due.ebillDue}
+            total ={x.due.total}
           />
         ))}
       </Grid>

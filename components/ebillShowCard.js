@@ -219,7 +219,7 @@ import {
           </Grid>
           <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
             <Typography>Total</Typography>
-            <Typography> {props.total ? props.total : "₹ x,xxx"}</Typography>
+            <Typography> <span style={{fontWeight:"bold"}}>₹</span> {props.total ? props.total : "₹ x,xxx"}</Typography>
           </Grid>
          
           <Grid item xs={12} sm={3} md={3} lg={3} xl={3} sx={{}}>
