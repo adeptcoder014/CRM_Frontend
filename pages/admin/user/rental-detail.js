@@ -25,6 +25,8 @@ import dayjs from "dayjs";
 import { useRentController } from "../../../controller/rental";
 import RentEntry from "../../../components/rentEntryCard";
 import RentShow from "../../../components/rentShowCard";
+
+import jwt_decode from 'jwt-decode'
 //========================================
 export default function UserRentalDetails() {
   const theme = useTheme();
@@ -36,6 +38,12 @@ export default function UserRentalDetails() {
     queryFn: () => getUserById(router.query.id),
     enabled: !!router.query.id,
   });
+
+if(typeof window !== 'undefined'){
+  const token = localStorage.getItem("Token")
+  const tokenInfo = jwt_decode(token)._id
+  console.log("TOKEN --->", tokenInfo)
+}
 
   //==============
   return (
