@@ -42,7 +42,7 @@ export default function RentEntry(props) {
         <Typography sx={{ mb: 2 }}>Rent Cycle</Typography>
         <TextField
           size="small"
-          variant="standard"
+          // variant="standard"
           type="number"
           value={rentCycle}
           onChange={(e) => setRentCycle(e.target.value)}
@@ -52,7 +52,7 @@ export default function RentEntry(props) {
         <Typography sx={{ mb: 2 }}>Rent</Typography>
         <TextField
           size="small"
-          variant="standard"
+          // variant="standard"
           type="number"
           onChange={(e) => setRent(e.target.value)}
         />
@@ -61,7 +61,7 @@ export default function RentEntry(props) {
         <Typography sx={{ mb: 2, fontWeight: "bold" }}>Ebill</Typography>
         <TextField
           size="small"
-          variant="standard"
+          // variant="standard"
           type="number"
           onChange={(e) => setReading(e.target.value)}
         />

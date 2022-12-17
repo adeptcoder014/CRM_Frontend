@@ -52,16 +52,19 @@ export default function Home() {
   if (query.isLoading) {
     return <Loading />;
   }
-
-  const user = query.data.data
+  console.log("--->", query.data.data);
+  const user = query.data.data;
   //================================================
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      sx={{ background: "linear-gradient(#dce29f, #c1c54e)"}}
+    > 
       {/* ------------------- GENERAL_INFORMATION ------------------------------- */}
 
       <Typography
         variant="h5"
-        sx={{ fontWeight: 600, color: "gray", mb: 1, ml: -5 }}
+        sx={{ fontWeight: 600, color: "gray", mb: 1 }}
       >
         General Information
       </Typography>
@@ -70,7 +73,7 @@ export default function Home() {
         container
         sx={{
           // width:"150%",
-          ml: -5,
+          // ml: -5,
           display: "flex",
           // justifyContent: "space-around",
           // alignItems:"space-between",
@@ -88,6 +91,7 @@ export default function Home() {
           xl={6}
           sx={{
             display: "flex",
+            // background: "linear-gradient(252deg, #e1e1e1, red)",
           }}
         >
           <Avatar sx={{ mr: 1, fontSize: 5 }} />
@@ -144,14 +148,14 @@ export default function Home() {
           // sx={{ }}
         >
           <Typography sx={{ fontWeight: 600, color: "gray", mr: 1, mt: 2 }}>
-              Joined on : {dayjs(user.joiningDate).format(`DD/MM/YYYY`)}
+            Joined on : {dayjs(user.joiningDate).format(`DD/MM/YYYY`)}
           </Typography>
         </Grid>
       </Grid>
       {/* ----------------- HOSTEL_INFORMATION --------------------------------- */}
       <Typography
         variant="h5"
-        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5, ml: -5 }}
+        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5 }}
       >
         Stay Information
       </Typography>
@@ -159,7 +163,7 @@ export default function Home() {
         container
         sx={{
           // width:"150%",
-          ml: -5,
+      
           // mt: 5,
           display: "flex",
           // justifyContent: "space-around",
@@ -233,7 +237,7 @@ export default function Home() {
       {/* ------------ DUES_INFORMATION ------------------------------ */}
       <Typography
         variant="h5"
-        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5, ml: -5 }}
+        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5 }}
       >
         Due(s) Information
       </Typography>
@@ -241,7 +245,7 @@ export default function Home() {
         maxWidth="sm"
         container
         sx={{
-          ml: -5,
+          
           display: "flex",
           boxShadow: "0px 2px 3px 0px grey",
           background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
@@ -263,7 +267,7 @@ export default function Home() {
             p: 1,
           }}
         >
-          <Typography sx={{ fontWeight: 600, color: "gray", fontSize: "20px" }}>
+          <Typography sx={{ fontWeight: 600, color: "gray"}}>
             Rent :
           </Typography>
         </Grid>
@@ -283,7 +287,7 @@ export default function Home() {
           <Typography
             sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
           >
-            ₹ {user.dues}
+            {/* ₹ {user.dues} */}
           </Typography>
         </Grid>
 
@@ -301,7 +305,7 @@ export default function Home() {
             p: 1,
           }}
         >
-          <Typography sx={{ fontWeight: 600, color: "gray", fontSize: "20px" }}>
+          <Typography sx={{ fontWeight: "bolder", color: "gray" }}>
             E-Bills :
           </Typography>
         </Grid>
@@ -319,9 +323,9 @@ export default function Home() {
           }}
         >
           <Typography
-            sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
+            sx={{ fontWeight: 600, color: "#28282B",  }}
           >
-            ₹ {user.eBills}
+            {/* ₹ {user.eBills} */}
           </Typography>
         </Grid>
 
@@ -339,8 +343,8 @@ export default function Home() {
             p: 1,
           }}
         >
-          <Typography sx={{ fontWeight: 600, color: "gray", fontSize: "20px" }}>
-            Miscellaneous :
+          <Typography sx={{ fontWeight: 600, color: "gray"}}>
+            Miscellaneous:
           </Typography>
         </Grid>
         <Grid
@@ -360,7 +364,7 @@ export default function Home() {
           <Typography
             sx={{ fontWeight: 600, color: "#28282B", fontSize: "20px" }}
           >
-            ₹ {user.misc}
+            {/* ₹ {user.misc} */}
           </Typography>
         </Grid>
       </Grid>
@@ -369,7 +373,7 @@ export default function Home() {
 
       <Typography
         variant="h5"
-        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5, ml: -5 }}
+        sx={{ fontWeight: 600, color: "gray", mb: 1, mt: 5 }}
       >
         General Notice
       </Typography>
@@ -377,8 +381,8 @@ export default function Home() {
         maxWidth="md"
         container
         sx={{
-          ml: -5,
-          mb:5,
+          
+          mb: 5,
 
           // display: "flex",
           boxShadow: "0px 2px 3px 0px grey",
@@ -405,11 +409,11 @@ export default function Home() {
         </Box>
         <Typography
           variant="h4"
-          sx={{ fontWeight: 600, color: "#28282B", mb: 1, mt: 2 ,ml:1}}
+          sx={{ fontWeight: 600, color: "#28282B", mb: 1, mt: 2 }}
         >
           Notice Title Here
         </Typography>
-        <Box sx={{ width: "99%",p:2 }}>
+        <Box sx={{ width: "99%", p: 2 }}>
           <Typography sx={{ fontWeight: 600, color: "gray" }}>
             On Today onwards laundary waala will take the cloths in the separate
             bag, which is provided to every student, On Today onwards laundary

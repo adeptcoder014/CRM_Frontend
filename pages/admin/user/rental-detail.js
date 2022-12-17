@@ -58,7 +58,7 @@ export default function UserRentalDetails() {
   return (
     <>
       <Box
-        sx={{ boxShadow: "inset 0px 1px 5px 0px grey", p: 2, borderRadius: 1 }}
+        sx={{ backgroundColor:"#eef2db",boxShadow: "inset 0px 1px 5px 0px grey", p: 2, borderRadius: 1 }}
       >
         <Grid
           container
@@ -81,7 +81,7 @@ export default function UserRentalDetails() {
       <Grid
         container
         sx={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#eef2db",
           p: 2,
           mt: 5,
           boxShadow: "inset 0px 1px 5px 0px grey",

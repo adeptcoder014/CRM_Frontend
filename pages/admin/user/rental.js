@@ -1,17 +1,13 @@
 import DashboardLayout from "../../../components/layout/dashboard-layout";
-import {
-  Grid,
-  Typography,
-  Box,
-  Container,
-  Button
-} from "@mui/material";
+import { Grid, Typography, Box, Container, Button } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 
 import { useRouter } from "next/router";
 import Loading from "../../../components/loading";
 import Table from "../../../components/table";
 import { useController } from "../../../controller/user";
+import ReactSearchBox from "react-search-box";
+import SearchInput, { createFilter } from "react-search-input";
 
 //========================================
 export default function UserRent() {
@@ -100,8 +96,12 @@ export default function UserRent() {
       ),
       flex: 1,
     },
- 
   ];
+
+  
+
+  // const filteredEmails = query?.data?.data?.user.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+
   //===================================================
 
   return (
@@ -112,6 +112,7 @@ export default function UserRent() {
       >
         Newly registered Users :
       </Typography>
+      {/* <SearchInput className="search-input"  /> */}
 
       <Box sx={{ height: 400, minWidth: "100%" }}>
         <Table rows={query?.data?.data?.user} columns={columns} />

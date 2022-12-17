@@ -466,8 +466,8 @@ export const theme = createTheme({
   custom: {
     primary: {
       main: "#ff9e80",
-      light: "#828DF8",
-      dark: "#3832A0",
+      light: "#c1c54e",
+      dark: "#8fa329",
       contrastText: "#FFFFFF",
     },
     secondary: {
@@ -478,10 +478,10 @@ export const theme = createTheme({
     },
     navbar: {
       light: {
-        backgroundColor: "#ff855f",
+        backgroundColor: "#c1c54e",
       },
       dark: {
-        backgroundColor: "#bb2c00",
+        backgroundColor: "#1a3f13",
       },
     },
     typography:{
