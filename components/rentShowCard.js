@@ -26,6 +26,11 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Loading from "./loading";
 import PedalBikeIcon from "@mui/icons-material/PedalBike";
+import axiosInstance from "../api/axios";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
+
 //=====================================
 const style = {
   position: "absolute",
@@ -46,7 +51,13 @@ const years = [2021, 2022, 2023];
 export default function RentShow(props) {
   //=============================
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [openEditedBy, setOpenEditedBy] = React.useState(false);
+
+  const [rentDue, setRentDue] = React.useState(0);
+  const [ebillDue, setEbillDue] = React.useState(0);
+
+  const [editedRents, setEditedRents] = React.useState([]);
+
   const handleClose = () => setOpen(false);
   //=========================================
 
@@ -113,8 +124,10 @@ export default function RentShow(props) {
                 }}
               >
                 <FormLabel>Have given</FormLabel>
-                {patchForm.values.due.rentDue === 0 ? (
-                  <Typography sx={{ mb: 2,mt:2,fontWeight:"bolder" }}>Fuck off</Typography>
+                {rentDue === 0 ? (
+                  <Typography sx={{ mb: 2, mt: 2, fontWeight: "bolder" }}>
+                    Fuck off
+                  </Typography>
                 ) : (
                   <TextField
                     id="due.rentDue"
@@ -197,8 +210,10 @@ export default function RentShow(props) {
                 <Tooltip title={patchForm.values.eBills.reading}>
                   <Typography sx={{ mb: 2 }}>E-Bill</Typography>
                 </Tooltip>
-                {patchForm.values.due.ebillDue === 0 ? (
-                  <Typography sx={{ mb: 2 ,fontWeight:"bolder"}}>Fuck off</Typography>
+                {ebillDue === 0 ? (
+                  <Typography sx={{ mb: 2, fontWeight: "bolder" }}>
+                    Fuck off
+                  </Typography>
                 ) : (
                   <TextField
                     id="due.ebillDue"
@@ -213,12 +228,15 @@ export default function RentShow(props) {
               </Box>
               <Button
                 onClick={() => {
-                  // console.log("FORM -->", props.rentId);
-                  // console.log("FORM -->", patchForm.values);
-                  axios.patch(`${ADMIN_URL}/user/rent/${props.rentId}`, {
-                    data: patchForm.values,
-                    userId: props.userId,
-                  });
+                  axiosInstance
+                    .patch(`${ADMIN_URL}/user/rent/${props.rentId}`, {
+                      data: patchForm.values,
+                      userId: props.userId,
+                    })
+                    .then((res) => {
+                      setOpen(false)
+                      Swal.fire("Done !", res, "success");
+                    });
                 }}
                 sx={{
                   backgroundColor: "white",
@@ -233,6 +251,64 @@ export default function RentShow(props) {
             </form>
           </Box>
         </Fade>
+      </Modal>
+      {/* ============== EDITED_BY =====================================  */}
+      <Modal
+        open={openEditedBy}
+        onClose={() => setOpenEditedBy(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            Who edited & when
+          </Typography>
+          {editedRents?.map((x) => (
+            <Box
+              sx={{
+                boxShadow: "inset 0px -2px 6px 0px grey",
+                background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+                borderRadius: "8px",
+                p: 1,
+                mb: 1,
+              }}
+            >
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2, fontWeight: "bold", color: "gray" }}
+              >
+                Who : <span>{x.who}</span>
+              </Typography>
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2, fontWeight: "bold", color: "gray" }}
+              >
+                When :{" "}
+                <span>
+                  @
+                  {
+                    dayjs(x.when)
+                      .format("YYYY-MM-DDTHH:mm:ssZ[Z]")
+                      .split("T")[1]
+                      .split("+")[0]
+                      .split(":")[0]
+                  }
+                  {":"}
+                  <span>
+                    {
+                      dayjs(x.when)
+                        .format("YYYY-MM-DDTHH:mm:ssZ[Z]")
+                        .split("T")[1]
+                        .split("+")[0]
+                        .split(":")[1]
+                    }
+                  </span>
+                </span>
+                <span> on {dayjs(x.when).format("DD-MM-YYYY")}</span>
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Modal>
       {/* ============================================= */}
       <Grid
@@ -343,6 +419,8 @@ export default function RentShow(props) {
                 .then((res) => {
                   console.log("<<---", res.data.rent),
                     patchForm.setValues(res.data.rent);
+                  setRentDue(res.data.rent.due.rentDue);
+                  setEbillDue(res.data.rent.due.ebillDue);
                 });
             }}
             sx={{
@@ -354,6 +432,17 @@ export default function RentShow(props) {
           >
             Update
           </Button>
+          <span>
+            <MoreVertIcon
+              onClick={() => {
+                setOpenEditedBy(true);
+                axiosInstance
+                  .get(`/user/edited-by/${props.rentId}`)
+                  .then((res) => setEditedRents(res.data));
+              }}
+              sx={{ color: "gray", ml: 11, cursor: "pointer" }}
+            />
+          </span>
         </Grid>
       </Grid>
     </>

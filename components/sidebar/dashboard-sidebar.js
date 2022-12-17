@@ -330,7 +330,7 @@ export default function DashboardSidebar(props) {
                 "You have been logged out!",
                 "Log in to continue",
                 "success"
-              );
+              ).then(res => window.location.reload())
             }}
             sx={{
               // zoom: '90%',

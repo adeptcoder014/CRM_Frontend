@@ -26,12 +26,13 @@ import { useRentController } from "../../../controller/rental";
 import RentEntry from "../../../components/rentEntryCard";
 import RentShow from "../../../components/rentShowCard";
 
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 //========================================
 export default function UserRentalDetails() {
   const theme = useTheme();
   const router = useRouter();
   const [user, setUser] = useState({});
+  const [token, setToken] = useState({});
 
   const query = useQuery({
     queryKey: ["userById", router.query.id],
@@ -39,11 +40,19 @@ export default function UserRentalDetails() {
     enabled: !!router.query.id,
   });
 
-if(typeof window !== 'undefined'){
-  const token = localStorage.getItem("Token")
-  const tokenInfo = jwt_decode(token)._id
-  console.log("TOKEN --->", tokenInfo)
-}
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("Token");
+      if (token) {
+        const tokenInfo = jwt_decode(token)._id;
+        {
+          tokenInfo ? setToken(tokenInfo) : null;
+        }
+      }
+    }
+  }, []);
+
+  // console.log("TOKEN ------>", token.editedRents);
 
   //==============
   return (
@@ -94,7 +103,7 @@ if(typeof window !== 'undefined'){
             userId={query?.data?.data.id}
             rentDue={x.due.rentDue}
             ebillDue={x.due.ebillDue}
-            total ={x.due.total}
+            total={x.due.total}
           />
         ))}
       </Grid>

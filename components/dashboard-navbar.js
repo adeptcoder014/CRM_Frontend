@@ -1,137 +1,3 @@
-// import PropTypes from "prop-types";
-// import styled from "@emotion/styled";
-// import {  Grid, AppBar, Badge, Box, IconButton, Toolbar, Tooltip, Button } from "@mui/material";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import { Bell as BellIcon } from "../icons/bell";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-// import AddIcon from "@mui/icons-material/Add";
-// import { useRouter } from 'next/router'
-// import { useState, useEffect } from "react";
-// import { getLoggedInUser } from "src/apis/login";
-// import React from "react";
-// import { useDashboardFilter } from "src/context/dashboardFilter";
-// import { useController } from "src/controller/dashboard";
-// import 'react-date-range/dist/styles.css'; // main css file
-// import 'react-date-range/dist/theme/default.css'; // theme css file
-// import CalendarModal from "./modal/calendarModal";
-
-// //=================================================================
-// const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
-//   backgroundColor: theme.palette.background.paper,
-//   boxShadow: theme.shadows[8],
-// }));
-
-// //=================================================================
-// export const DashboardNavbar = (props) => {
-
-//   const { showFilter, onSidebarOpen, ...other } = props;
-
-//   const router = useRouter()
-
-//   const [user, setUser] = useState({})
-//   useEffect(() => {
-//     getLoggedInUser().then(res => setUser(res))
-//   }, [])
-
-//   //=================================================================
-//   return (
-//     <>
-//       <DashboardNavbarRoot
-//         sx={{
-//           left: {
-//             lg: 280,
-//           },
-//           width: {
-//             lg: "calc(100% - 280px)",
-//           },
-//         }}
-//         {...other}
-//       >
-//         <Toolbar
-//           disableGutters
-//           sx={{
-//             height: "100%",
-//             left: 0,
-//             p: 2,
-
-//           }}
-//         >
-//           <p id="welcomeText">👋 Welcome {user.fullName} </p>
-//           <IconButton
-//             onClick={onSidebarOpen}
-//             sx={{
-
-//               display: {
-//                 xs: "inline-flex",
-//                 lg: "none",
-//               },
-//             }}
-//           >
-//             <MenuIcon />
-//           </IconButton >
-//           {/* --------------------------------------------------------------- */}
-//           {showFilter && (
-//             <Box sx={{ width: "100%", flex: 1, display: "flex", justifyContent: "flex-end" }}>
-//             </Box>
-//           )}
-
-//           {/* --------------------------------------------------------------- */}
-
-//           <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-//             {showFilter &&
-//               <CalendarModal />}
-//             <Grid item lg={1} xs={12} sx={{
-
-//               display: "flex",
-//               justifyContent: "center",
-//               alignItems: "center"
-//             }}>
-
-//               <Button
-//                 onClick={() => {
-//                   router.push("/badla/view-badla");
-//                 }}
-//                 sx={{
-//                   width: "100%",
-//                   height: "50%",
-//                   backgroundColor: "#8b5704",
-//                   color: "white",
-//                   p: 10,
-//                   ml: 1,
-//                   padding: "0px 12px 0px 0px",
-//                 }}
-//               >
-//                 <AddIcon sx={{ ml: 1 }} />
-//                 Badla
-//               </Button>
-//             </Grid>
-//             <Tooltip title="Notifications">
-//               <IconButton sx={{}}>
-//                 <Badge color="error" badgeContent={14}>
-//                   <BellIcon sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
-//                 </Badge>
-//               </IconButton>
-//             </Tooltip>
-//           </Box>
-//           <Tooltip title="User">
-//             <AccountCircleIcon
-//               onClick={() => router.push({
-//                 pathname: '/account',
-//                 query: { user: user }
-//               })}
-//               sx={{ width: 31.5, height: 36, color: "#905e0f", cursor: "pointer" }}
-//             />
-//           </Tooltip>
-//         </Toolbar>
-//       </DashboardNavbarRoot>
-//     </>
-//   );
-// };
-// //=================================================================
-// DashboardNavbar.propTypes = {
-//   onSidebarOpen: PropTypes.func,
-// };
-
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -152,6 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { useRouter } from "next/router";
 import { useDarkMode } from "../context/darkMode";
 import { useTheme } from "@mui/styles";
+import jwt_decode from "jwt-decode";
 
 //=========================================================
 const Search = styled("div")(({ theme }) => ({
@@ -299,6 +166,23 @@ export default function DashboardNavbar(props) {
       </MenuItem>
     </Menu>
   );
+
+  const [token, setToken] = React.useState({});
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("Token");
+      if (token) {
+        const tokenInfo = jwt_decode(token)._id;
+        {
+          tokenInfo ? setToken(tokenInfo) : null;
+        }
+      }
+    }
+  }, []);
+
+  console.log("TOKEN ------>", token);
+
   //=========================================================
 
   return (
@@ -327,12 +211,20 @@ export default function DashboardNavbar(props) {
             </IconButton>
           )}
           <Typography
-            variant="h6"
+            // variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, fontWeight: "bolder" }}
           >
             Admin Center
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "bolder",
+              ml: 2,
+            }}
+          >
+            Hii {token.name} 👋
           </Typography>
           <Search>
             <SearchIconWrapper>
