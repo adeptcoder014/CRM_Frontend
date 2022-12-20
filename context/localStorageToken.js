@@ -1,21 +1,32 @@
-import React, { createContext, useMemo, useContext } from "react";
+import React, {
+  createContext,
+  useMemo,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 //===============================================
 export const TokenContext = createContext();
 
 const TokenProvider = ({ children }) => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("Token");
-    const value = useMemo(
-      () => ({
-        token,
-      }),   
-      [token]
-    );
+  const [token, setToken] = useState({});
 
-    return (
-      <TokenContext.Provider value={value}>{children}</TokenContext.Provider>
-    );
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("Token");
+      // const value = useMemo(
+      //   () => ({
+      //     token,
+      //   }),
+      //   [token]
+      // );
+      // const value = token;
+      setToken(token);
+    }
+  }, []);
+  return (
+    <TokenContext.Provider value={token}>{children}</TokenContext.Provider>
+  );
 };
 
 export const useToken = () => {

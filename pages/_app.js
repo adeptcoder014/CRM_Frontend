@@ -7,6 +7,7 @@ import { theme } from "../theme";
 import { CssBaseline } from "@mui/material";
 import DarkModeProvider from "../context/darkMode";
 import SidebarOpenProvider from "../context/sidebarOpen";
+import TokenProvider from "../context/localStorageToken";
 // import { createEmotionCache } from "../utils/create-emotion-cache";
 
 // import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -42,12 +43,15 @@ const App = (props) => {
           {/* <Component {...pageProps} /> */}
           <DarkModeProvider>
             <SidebarOpenProvider>
-              {getLayout(<Component {...pageProps} />)}
+              <TokenProvider>
+                {getLayout(<Component {...pageProps} />)}
+              </TokenProvider>
             </SidebarOpenProvider>
           </DarkModeProvider>
 
           {/* </DashboardFilterProvider> */}
         </ThemeProvider>
+
         {/* </LocalizationProvider> */}
         {/* </CacheProvider> */}
       </QueryClientProvider>

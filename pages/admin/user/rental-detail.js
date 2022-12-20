@@ -100,7 +100,7 @@ export default function UserRentalDetails() {
             rent={x.rent}
             status={x.status}
             rentId={x._id}
-            userId={query?.data?.data.id}
+            userId={router.query.id}
             rentDue={x.due.rentDue}
             ebillDue={x.due.ebillDue}
             total={x.due.total}

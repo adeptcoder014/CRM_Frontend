@@ -49,6 +49,7 @@ const years = [2021, 2022, 2023];
 
 //============================================
 export default function RentShow(props) {
+  const router = useRouter()
   //=============================
   const [open, setOpen] = React.useState(false);
   const [openEditedBy, setOpenEditedBy] = React.useState(false);
@@ -435,10 +436,11 @@ export default function RentShow(props) {
           <span>
             <MoreVertIcon
               onClick={() => {
-                setOpenEditedBy(true);
-                axiosInstance
-                  .get(`/user/edited-by/${props.rentId}`)
-                  .then((res) => setEditedRents(res.data));
+                router.push(`/admin/user/who-edited/?id=${props.rentId}`)
+                // setOpenEditedBy(true);
+                // axiosInstance
+                //   .get(`/user/edited-by/${props.rentId}`)
+                //   .then((res) => setEditedRents(res.data));
               }}
               sx={{ color: "gray", ml: 11, cursor: "pointer" }}
             />
