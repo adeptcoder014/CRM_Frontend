@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { useDarkMode } from "../context/darkMode";
 import { useTheme } from "@mui/styles";
 import jwt_decode from "jwt-decode";
+import { getAdminById } from "../api/admin";
 
 //=========================================================
 const Search = styled("div")(({ theme }) => ({
@@ -168,7 +169,7 @@ export default function DashboardNavbar(props) {
   );
 
   const [token, setToken] = React.useState({});
-
+  const [admin, setAdmin] = React.useState({});
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("Token");
@@ -178,6 +179,9 @@ export default function DashboardNavbar(props) {
           tokenInfo ? setToken(tokenInfo) : null;
         }
       }
+      getAdminById(jwt_decode(token)._id).then((res) =>
+      setAdmin( res.data.data)
+      );
     }
   }, []);
 
@@ -224,7 +228,7 @@ export default function DashboardNavbar(props) {
               ml: 2,
             }}
           >
-            Hii {token.name} 👋
+            Hii {admin.name} 👋
           </Typography>
           <Search>
             <SearchIconWrapper>

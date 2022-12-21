@@ -30,16 +30,18 @@ import jwt_decode from "jwt-decode";
 import WhoEditedCard from "../../../components/whoEditedCard";
 import { useToken } from "../../../context/localStorageToken";
 import { getAdminById } from "../../../api/admin";
+import { useTokenQuery } from "../../../controller/token";
 //========================================
 export default function WhoEdited() {
-  const theme = useTheme();
-  const router = useRouter();
-  const token = useToken();
+  const { tokenQuery } = useTokenQuery();
+  console.log(tokenQuery?.data?._id);
   const [editedRents, setEditedRents] = useState([]);
   useEffect(() => {
-    getAdminById(jwt_decode(token)._id).then((res) =>
-      setEditedRents(res.data.data.editedRents)
-    );
+    if (typeof tokenQuery?.data?._id !== "undefined") {
+    getAdminById(tokenQuery?.data?._id).then((res) => {
+       return setEditedRents(res?.data?.data?.editedRents);
+      });
+    }
   }, []);
 
   //==============
@@ -61,6 +63,7 @@ export default function WhoEdited() {
       >
         {editedRents?.map((x) => (
           <WhoEditedCard
+            mode={x.mode}
             rentId={x.rentId}
             ebillDue={x.ebillDue}
             rent={x.rent}

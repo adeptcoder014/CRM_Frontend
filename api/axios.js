@@ -9,8 +9,9 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
     const token = localStorage.getItem("Token");
+    // console.log("---- TOKEN", jwt_decode(token)._id)
     config.headers.Authorization = `Bearer ${token}`;
-    config.headers.Admin_User = jwt_decode(token)._id._id
+    config.headers.Admin_User = jwt_decode(token)._id
 
   }
 

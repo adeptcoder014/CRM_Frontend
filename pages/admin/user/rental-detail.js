@@ -27,12 +27,13 @@ import RentEntry from "../../../components/rentEntryCard";
 import RentShow from "../../../components/rentShowCard";
 
 import jwt_decode from "jwt-decode";
+import { useTokenQuery } from "../../../controller/token";
 //========================================
 export default function UserRentalDetails() {
   const theme = useTheme();
   const router = useRouter();
   const [user, setUser] = useState({});
-  const [token, setToken] = useState({});
+  const [token, setToken] = useState("");
 
   const query = useQuery({
     queryKey: ["userById", router.query.id],
@@ -40,75 +41,77 @@ export default function UserRentalDetails() {
     enabled: !!router.query.id,
   });
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("Token");
-      if (token) {
-        const tokenInfo = jwt_decode(token)._id;
-        {
-          tokenInfo ? setToken(tokenInfo) : null;
-        }
-      }
-    }
-  }, []);
+  const { tokenQuery } = useTokenQuery();
+  // useEffect(() => {
+  //   if (!tokenQuery.isLoading) (
+  //     setToken(tokenQuery)
+  // )
+  // }, []);
 
-  // console.log("TOKEN ------>", token.editedRents);
+  console.log("TOKEN ------>", tokenQuery?.data?._id);
 
   //==============
-  return (
-    <>
-      <Box
-        sx={{ backgroundColor:"#eef2db",boxShadow: "inset 0px 1px 5px 0px grey", p: 2, borderRadius: 1 }}
-      >
+
+  if (!query.isLoading)
+    return (
+      <>
+        <Box
+          sx={{
+            backgroundColor: "#eef2db",
+            boxShadow: "inset 0px 1px 5px 0px grey",
+            p: 2,
+            borderRadius: 1,
+          }}
+        >
+          <Grid
+            container
+            sx={{
+              boxShadow: "0px 2px 3px 0px grey",
+              background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
+              borderRadius: "8px",
+              p: 2,
+              borderRadius: 1,
+              display: "flex",
+              justifyContent: "space-2round",
+              // mt: 5,
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <RentEntry user={query?.data?.data} />
+          </Grid>
+        </Box>
         <Grid
           container
           sx={{
-            boxShadow: "0px 2px 3px 0px grey",
-            background: "linear-gradient(252deg, #e1e1e1, #ffffff)",
-            borderRadius: "8px",
+            backgroundColor: "#eef2db",
             p: 2,
+            mt: 5,
+            boxShadow: "inset 0px 1px 5px 0px grey",
+
             borderRadius: 1,
             display: "flex",
-            justifyContent: "space-2round",
-            // mt: 5,
-            display: "flex",
-            justifyContent: "space-around",
+            flexDirection: "columns",
+            // justifyContent: "space-around",
           }}
         >
-          <RentEntry user={query?.data?.data} />
+          {query?.data?.data?.dues?.rents?.map((x) => (
+            <RentShow
+              month={x.month}
+              rentCycle={x.rentCycle}
+              year={x.year}
+              rent={x.rent}
+              status={x.status}
+              rentId={x._id}
+              userId={router.query.id}
+              rentDue={x.due.rentDue}
+              ebillDue={x.due.ebillDue}
+              total={x.due.total}
+            />
+          ))}
         </Grid>
-      </Box>
-      <Grid
-        container
-        sx={{
-          backgroundColor: "#eef2db",
-          p: 2,
-          mt: 5,
-          boxShadow: "inset 0px 1px 5px 0px grey",
-
-          borderRadius: 1,
-          display: "flex",
-          flexDirection: "columns",
-          // justifyContent: "space-around",
-        }}
-      >
-        {query?.data?.data?.dues?.rents?.map((x) => (
-          <RentShow
-            month={x.month}
-            rentCycle={x.rentCycle}
-            year={x.year}
-            rent={x.rent}
-            status={x.status}
-            rentId={x._id}
-            userId={router.query.id}
-            rentDue={x.due.rentDue}
-            ebillDue={x.due.ebillDue}
-            total={x.due.total}
-          />
-        ))}
-      </Grid>
-    </>
-  );
+      </>
+    );
 }
 UserRentalDetails.getLayout = (page) => (
   <DashboardLayout>{page}</DashboardLayout>
